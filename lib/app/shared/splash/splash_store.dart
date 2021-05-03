@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:dex_control_product/app/shared/models/login.dart';
+import 'package:dex_control_product/app/shared/models/product_model.dart';
 import 'package:dex_control_product/app/shared/models/user_model.dart';
 import 'package:dex_control_product/app/shared/useful/crypto_password.dart';
 import 'package:dex_control_product/app/shared/useful/helper.dart';
@@ -24,7 +25,10 @@ abstract class _SplashStoreBase with Store {
   @observable
   String status = '';
 
-  List<UserModel> products = [];
+  @observable
+  int totalPage = 0;
+
+  List<ProductModel> products = [];
 
   @action
   Future<void> checkConnection() async {
@@ -104,20 +108,42 @@ abstract class _SplashStoreBase with Store {
     }
   }
 
+  Future<int?> countProdut() async {
+    Database? dbDex = await helper.db;
+    totalPage += Sqflite.firstIntValue(
+        await dbDex!.rawQuery('SELECT COUNT(*) FROM ${helper.productModel}'))!;
+  }
+
   @action
   Future<void> initListProduts() async {
     print('getProduts');
     try {
       Database? dbDex = await helper.db;
       List<Map> userAutoLogin = await dbDex!.rawQuery(
-          'SELECT  ${helper.userModel}.* FROM ${helper.userModel} LIMIT 18 OFFSET 0');
+          'SELECT  ${helper.productModel}.* FROM ${helper.productModel} LIMIT 22 OFFSET 0');
       if (userAutoLogin.length > 0) {
         for (var item in userAutoLogin) {
           Map<String, dynamic> map = json.decode(json.encode(item));
-          products.add(new UserModel.fromJson(map));
+          products.add(new ProductModel.fromJson(map));
         }
       }
-      Modular.to.pushReplacementNamed('/home', arguments: [user, products]);
+      countProdut().then((value) => Modular.to.pushReplacementNamed('/home',
+          arguments: [user, products, totalPage]));
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @action
+  Future<void> insertProduts() async {
+    print('insertProduts');
+    try {
+      Database? dbDex = await helper.db;
+      for (var i = 0; i < 100; i++) {
+        ProductModel prod =
+            ProductModel(name: 'Arroz$i', preco: (3.25 + i), quant: (16.0 + i));
+        await dbDex!.insert(helper.productModel, prod.toJson());
+      }
     } catch (e) {
       print(e);
     }

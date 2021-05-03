@@ -16,9 +16,7 @@ class LoginPage extends StatefulWidget {
   LoginPageState createState() => LoginPageState();
 }
 
-class LoginPageState extends State<LoginPage> {
-  final LoginStore store = Modular.get();
-
+class LoginPageState extends ModularState<LoginPage, LoginStore> {
   @override
   void initState() {
     super.initState();
@@ -30,11 +28,12 @@ class LoginPageState extends State<LoginPage> {
     var height = MediaQuery.of(context).size.height;
     final ScreenSize size = ScreenSize(width: width, height: height);
     return Scaffold(
-      key: store.scaffoldKey,
+      key: controller.scaffoldKey,
+      backgroundColor: Colors.white,
       body: Observer(
         builder: (_) {
           return Form(
-            key: store.formKey,
+            key: controller.formKey,
             child: ListView(
               padding: EdgeInsets.all(width * 0.05),
               children: [
@@ -52,9 +51,9 @@ class LoginPageState extends State<LoginPage> {
                 /*  Container(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     child: TextFormField(
-                      controller: store.ctrlLogin,
+                      controller: controller.ctrlLogin,
                       obscureText: false,
-                      validator: (value) => store.validaLogin(value!),
+                      validator: (value) => controller.validaLogin(value!),
                       style: StyleText.labelTextField,
                       decoration: new InputDecoration(
                         enabledBorder: OutlineInputBorder(
@@ -75,25 +74,25 @@ class LoginPageState extends State<LoginPage> {
                     label: 'Login',
                     hint: 'Digite o Login',
                     keyboardType: TextInputType.name,
-                    controller: store.ctrlLogin,
-                    validator: store.validaLogin),
+                    controller: controller.ctrlLogin,
+                    validator: controller.validaLogin),
                 CustomTextField(
                     label: 'Senha',
                     hint: 'Digite a Senha',
-                    controller: store.ctrlSenha,
-                    validator: store.validaSenha,
+                    controller: controller.ctrlSenha,
+                    validator: controller.validaSenha,
                     password: true,
-                    visibility: store.visibilityPassword,
+                    visibility: controller.visibilityPassword,
                     keyboardType: TextInputType.visiblePassword,
                     suffixIcon: IconButton(
                         icon: Icon(
-                            store.visibilityPassword
+                            controller.visibilityPassword
                                 ? Icons.visibility
                                 : Icons.visibility_off,
                             color: AppColors.greenBlueGrayola),
                         onPressed: () {
                           setState(() {
-                            store.setvisibility();
+                            controller.setvisibility();
                           });
                         })),
                 CustomLoadButton(
@@ -102,13 +101,13 @@ class LoginPageState extends State<LoginPage> {
                         ? StyleText.textAutoSizeButton
                         : StyleText.textButton,
                     txt: 'Entrar',
-                    loading: store.loading,
+                    loading: controller.loading,
                     onPressed: () {
-                      store.login();
+                      controller.login();
                     }),
                 Observer(builder: (_) {
-                  return store.status != ''
-                      ? Text(store.status,
+                  return controller.status != ''
+                      ? Text(controller.status,
                           textAlign: TextAlign.center,
                           style: StyleText.mdgLogin,
                           maxLines: 2,

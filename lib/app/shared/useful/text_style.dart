@@ -37,7 +37,7 @@ class Appformat {
   static var date = new DateFormat('dd/MM/yyyy');
   static var day = new DateFormat.EEEE('pt_BR');
   static var dateHifen = new DateFormat('yyyy-MM-dd');
-  static var datehour = new DateFormat.yMd().add_Hm();
+  static var datehour = new DateFormat('yyyy-MM-dd HH:mm');
   static var dayMonth = new DateFormat('dd/MM');
   static var monthYear = new DateFormat('MM/yy');
   static var hourDot = new DateFormat('Hm');

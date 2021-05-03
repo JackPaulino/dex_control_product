@@ -19,6 +19,7 @@ class SplashPageState extends ModularState<SplashPage, SplashStore> {
   void initState() {
     super.initState();
     controller.insertUseModel();
+    //controller.insertProduts();
     controller.checkConnection();
   }
 

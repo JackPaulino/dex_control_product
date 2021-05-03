@@ -1,10 +1,10 @@
 class ProductModel {
-  late int id;
+  int? id;
   late String name;
   double? preco;
   double? quant;
 
-  ProductModel({required this.id, required this.name, this.preco, this.quant});
+  ProductModel({this.id, required this.name, this.preco, this.quant});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
