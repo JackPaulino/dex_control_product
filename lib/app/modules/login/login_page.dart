@@ -47,7 +47,7 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
                         border: Border.all(color: AppColors.primary, width: 3),
                         image: DecorationImage(
                             fit: BoxFit.none,
-                            image: AssetImage('assets/images/logo.png')))),
+                            image: AssetImage('assets/images/logo.jpg')))),
                 /*  Container(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     child: TextFormField(

@@ -1,16 +1,18 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'modules/home/home_module.dart';
+import 'modules/home/home_store.dart';
 import 'modules/login/login_page.dart';
 import 'modules/login/login_store.dart';
-import 'shared/splash/splash_page.dart';
-import 'shared/splash/splash_store.dart';
+import 'modules/splash/splash_page.dart';
+import 'modules/splash/splash_store.dart';
 
 class AppModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind((i) => LoginStore()),
-    Bind((i) => SplashStore()),
+    Bind.lazySingleton((i) => SplashStore()),
+    Bind.lazySingleton((i) => LoginStore()),
+    Bind((i) => HomeStore())
   ];
 
   @override

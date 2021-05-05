@@ -10,6 +10,7 @@ class DataBaseHelper {
   final String productModel = 'productTABLE';
   final String idProduct = 'id';
   final String nameProduct = 'name';
+  final String img = 'img';
   final String preco = 'preco';
   final String quant = 'quant';
 
@@ -52,6 +53,7 @@ class DataBaseHelper {
     await db.execute("CREATE TABLE $productModel(" +
         "$idProduct INTEGER PRIMARY KEY AUTOINCREMENT," +
         "$nameProduct TEXT," +
+        "$img TEXT," +
         "$preco FLOAT," +
         "$quant FLOAT)");
 

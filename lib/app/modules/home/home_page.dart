@@ -1,15 +1,18 @@
 import 'package:dex_control_product/app/modules/home/home_store.dart';
+import 'package:dex_control_product/app/modules/home/widget/product.dart';
 import 'package:dex_control_product/app/shared/models/product_model.dart';
 import 'package:dex_control_product/app/shared/models/user_model.dart';
 import 'package:dex_control_product/app/shared/useful/app_colors.dart';
 import 'package:dex_control_product/app/shared/useful/custom_decimal.dart';
+import 'package:dex_control_product/app/shared/useful/text_style.dart';
 import 'package:dex_control_product/app/shared/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+import 'product/product_page.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -110,12 +113,14 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Observer(builder: (_) {
         return CustomScrollView(
           slivers: [
             SliverAppBar(
-              backgroundColor: Colors.black12,
-              title: Text('Bem vindo ${controller.user.name}'),
+              backgroundColor: AppColors.greenBlueGrayola,
+              title: Text('Bem vindo ${controller.user.name}',
+                  style: StyleText.labelTextField),
               floating: true,
               snap: true,
               actions: [
@@ -186,14 +191,25 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                                       AppColors.loading))));
                     }
                   }
-                  return Text(
-                      '${controller.listProdut[index].name} - $index - ${controller.listProdut[index].id}');
+                  return GestureDetector(
+                    onTap: () {
+                      Modular.to.push(MaterialPageRoute(
+                          builder: (context) => ProductPage(
+                              product: controller.listProdut[index])));
+                    },
+                    child: CardProduct(
+                        product: controller.listProdut[index],
+                        details: () {
+                          Modular.to.pushNamed('/home/product',
+                              arguments: controller.listProdut[index]);
+                        }),
+                  );
                 }, childCount: controller.pageProdut['total_page']),
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 150.0,
+                  maxCrossAxisExtent: 190.0,
                   mainAxisSpacing: 10.0,
                   crossAxisSpacing: 1.0,
-                  childAspectRatio: .58,
+                  childAspectRatio: .66,
                 ))
           ],
         );

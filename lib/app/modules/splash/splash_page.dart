@@ -1,4 +1,4 @@
-import 'package:dex_control_product/app/shared/splash/splash_store.dart';
+import 'package:dex_control_product/app/modules/splash/splash_store.dart';
 import 'package:dex_control_product/app/shared/useful/app_colors.dart';
 import 'package:dex_control_product/app/shared/useful/screen_size.dart';
 import 'package:dex_control_product/app/shared/useful/text_style.dart';
@@ -19,7 +19,7 @@ class SplashPageState extends ModularState<SplashPage, SplashStore> {
   void initState() {
     super.initState();
     controller.insertUseModel();
-    //controller.insertProduts();
+    controller.insertProduts();
     controller.checkConnection();
   }
 

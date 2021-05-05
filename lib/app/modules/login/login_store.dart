@@ -66,7 +66,8 @@ abstract class _LoginStoreBase with Store {
 
   void login() async {
     loading = true;
-    if (formKey.currentState!.validate) {
+    // ignore: unnecessary_null_comparison
+    if (formKey.currentState!.validate != null) {
       try {
         Database? dbDex = await helper.db;
         List<Map> login = await dbDex!.rawQuery('SELECT ${helper.userModel}.* ' +

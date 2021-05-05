@@ -140,8 +140,8 @@ abstract class _SplashStoreBase with Store {
     try {
       Database? dbDex = await helper.db;
       for (var i = 0; i < 100; i++) {
-        ProductModel prod =
-            ProductModel(name: 'Arroz$i', preco: (3.25 + i), quant: (16.0 + i));
+        ProductModel prod = ProductModel(
+            name: 'Arroz$i', img: '$i', preco: (3.25 + i), quant: (16.0 + i));
         await dbDex!.insert(helper.productModel, prod.toJson());
       }
     } catch (e) {
