@@ -54,21 +54,6 @@ mixin _$SplashStore on _SplashStoreBase, Store {
     });
   }
 
-  final _$totalPageAtom = Atom(name: '_SplashStoreBase.totalPage');
-
-  @override
-  int get totalPage {
-    _$totalPageAtom.reportRead();
-    return super.totalPage;
-  }
-
-  @override
-  set totalPage(int value) {
-    _$totalPageAtom.reportWrite(value, super.totalPage, () {
-      super.totalPage = value;
-    });
-  }
-
   final _$checkConnectionAsyncAction =
       AsyncAction('_SplashStoreBase.checkConnection');
 
@@ -122,8 +107,7 @@ mixin _$SplashStore on _SplashStoreBase, Store {
     return '''
 helper: ${helper},
 user: ${user},
-status: ${status},
-totalPage: ${totalPage}
+status: ${status}
     ''';
   }
 }

@@ -1,12 +1,10 @@
-import 'package:dex_control_product/app/shared/useful/text_style.dart';
-
 class ProductModel {
   int? id;
   late String name;
   String? image;
   double? price;
   double? stock;
-  late DateTime dateRegister;
+  late String dateModify;
 
   ProductModel(
       {this.id,
@@ -14,15 +12,15 @@ class ProductModel {
       this.image,
       this.price,
       this.stock,
-      required this.dateRegister});
+      required this.dateModify});
 
-  ProductModel.fromJson(Map<String, dynamic> json) {
+  ProductModel.fromJson(Map<dynamic, dynamic> json) {
     id = json['id'];
     name = json['name'];
     image = json['image'];
     price = json['price'];
     stock = json['stock'];
-    dateRegister = Appformat.dateHifen.parse(json['date_register']);
+    dateModify = json['date_modify'];
   }
 
   Map<String, dynamic> toJson() {
@@ -32,7 +30,7 @@ class ProductModel {
     data['image'] = this.image;
     data['price'] = this.price;
     data['stock'] = this.stock;
-    data['date_register'] = Appformat.dateHifen.format(this.dateRegister);
+    data['date_modify'] = this.dateModify;
     return data;
   }
 }

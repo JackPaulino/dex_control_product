@@ -5,7 +5,7 @@ class UserModel {
 
   UserModel({this.id, this.name, this.password});
 
-  UserModel.fromJson(Map<String, dynamic> json) {
+  UserModel.fromJson(Map<dynamic, dynamic> json) {
     id = json['id'];
     name = json['name'];
     password = json['password'];

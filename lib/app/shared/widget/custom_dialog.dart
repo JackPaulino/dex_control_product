@@ -22,7 +22,15 @@ Future<void> customDialog(context,
               child: text != ''
                   ? Text(text, overflow: TextOverflow.fade)
                   : content),
-          actions: buttons,
+          actions: [
+            Container(
+              width: MediaQuery.of(context).size.width * .94,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: buttons!,
+              ),
+            )
+          ],
         ),
       );
     },

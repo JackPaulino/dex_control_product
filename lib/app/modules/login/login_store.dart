@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dex_control_product/app/shared/models/product_model.dart';
 import 'package:dex_control_product/app/shared/models/user_model.dart';
 import 'package:dex_control_product/app/shared/useful/crypto_password.dart';
@@ -42,9 +40,6 @@ abstract class _LoginStoreBase with Store {
 
   @observable
   bool visibilityPassword = true;
-
-  @observable
-  int totalPage = 0;
 
   @action
   void setvisibility() => visibilityPassword = !visibilityPassword;
@@ -130,28 +125,19 @@ abstract class _LoginStoreBase with Store {
     }
   }
 
-  Future<int?> countProdut() async {
-    Database? dbDex = await helper.db;
-    totalPage += Sqflite.firstIntValue(
-        await dbDex!.rawQuery('SELECT COUNT(*) FROM ${helper.productModel}'))!;
-  }
-
   @action
   Future<void> initListProduts() async {
     print('getProduts');
     try {
-      countProdut();
       Database? dbDex = await helper.db;
       List<Map> userAutoLogin = await dbDex!.rawQuery(
           'SELECT  ${helper.productModel}.* FROM ${helper.productModel} LIMIT 22 OFFSET 0');
       if (userAutoLogin.length > 0) {
         for (var item in userAutoLogin) {
-          Map<String, dynamic> map = json.decode(json.encode(item));
-          products.add(new ProductModel.fromJson(map));
+          products.add(new ProductModel.fromJson(item));
         }
       }
-      Modular.to.pushReplacementNamed('/home',
-          arguments: [user, products, totalPage]);
+      Modular.to.pushReplacementNamed('/home', arguments: [user, products]);
     } catch (e) {
       print(e);
     }

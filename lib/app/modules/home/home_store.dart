@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:dex_control_product/app/shared/models/product_model.dart';
 import 'package:dex_control_product/app/shared/models/user_model.dart';
 import 'package:dex_control_product/app/shared/useful/helper.dart';
+import 'package:dex_control_product/app/shared/useful/text_style.dart';
 import 'package:mobx/mobx.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -22,18 +21,18 @@ abstract class HomeStoreBase with Store {
 
   Map<String, dynamic> pageProdut = {
     'limit': 22,
-    'backut_limit': 22,
     'offset': 22,
-    'bakut_offset': 22,
     'error': false,
-    'total_page': 0,
     'pass_page': 6,
     'loading': false,
     'has_more': true,
   };
 
   @observable
-  String filter = '1 = 1';
+  String filter = '';
+
+  @observable
+  String detailFilter = '';
 
   @observable
   Map<bool, String> alfa = {true: 'A - Z', false: 'Z - A'};
@@ -41,36 +40,26 @@ abstract class HomeStoreBase with Store {
   @action
   Future<void> getProduts({bool refresh = false}) async {
     print('getProduts');
+    pageProdut['error'] = false;
     try {
       if (refresh) {
-        pageProdut['backut_limit'] = pageProdut['limit'];
-        pageProdut['bakut_offset'] = pageProdut['offset'];
-        pageProdut['limit'] = listProdut.length;
+        pageProdut['limit'] = '22';
         pageProdut['offset'] = '0';
+        pageProdut['has_more'] = true;
         listProdut = <ProductModel>[].asObservable();
       }
       Database? dbDex = await helper.db;
       List<Map> products = await dbDex!.rawQuery(
-          'SELECT * FROM ${helper.productModel} WHERE $filter LIMIT ${pageProdut['limit']} OFFSET ${pageProdut['offset']} ');
+          'SELECT * FROM ${helper.productModel} $filter LIMIT ${pageProdut['limit']} OFFSET ${pageProdut['offset']} ');
 
       if (products.length > 0) {
         for (var item in products) {
-          Map<String, dynamic> map = json.decode(json.encode(item));
-          ProductModel prod = new ProductModel.fromJson(map);
+          ProductModel prod = new ProductModel.fromJson(item);
           if (listProdut.where((p) => p.id == prod.id).length == 0) {
             listProdut.add(prod);
           }
         }
-        if (refresh) {
-          pageProdut['limit'] = pageProdut['backut_limit'];
-          pageProdut['offset'] = pageProdut['bakut_offset'];
-        } else {
-          pageProdut['offset'] += pageProdut['limit'];
-          pageProdut['has_more'] =
-              products.length == pageProdut['limit'] ? true : false;
-          pageProdut['total_page'] = products.length;
-          pageProdut['error'] = false;
-        }
+        pageProdut['offset'] += pageProdut['limit'];
       } else
         pageProdut['has_more'] = false;
     } catch (e) {
@@ -79,29 +68,30 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  Future<void> aplicFilter() async {
-    print('getProduts');
-    try {
-      Database? dbDex = await helper.db;
-      List<Map> products = await dbDex!.rawQuery(
-          'SELECT ${helper.productModel}.* FROM ${helper.productModel} WHERE $filter LIMIT ${pageProdut['limit']} OFFSET ${pageProdut['offset']} ');
-
-      if (products.length > 0) {
-        for (var item in products) {
-          Map<String, dynamic> map = json.decode(json.encode(item));
-          listProdut.add(new ProductModel.fromJson(map));
+  void aplyFilter({dynamic value, required int type}) {
+    switch (type) {
+      case 0:
+        {
+          filter =
+              'WHERE ${helper.dateModify} = \'${Appformat.dateHifen.format(value)}\'';
+          detailFilter = 'Data: ${Appformat.dateHifen.format(value)}';
         }
-        pageProdut['offset'] += pageProdut['limit'];
-        pageProdut['has_more'] =
-            products.length == pageProdut['limit'] ? true : false;
-        pageProdut['error'] = false;
-      } else
-        pageProdut['has_more'] = false;
-    } catch (e) {
-      pageProdut['error'] = true;
+        break;
+      case 1:
+        {
+          filter =
+              'WHERE ${helper.price} = \'${Appformat.dateHifen.format(value)}\'';
+          detailFilter = 'Data: ${Appformat.dateHifen.format(value)}';
+        }
+        break;
+      default:
+        filter = '';
+        detailFilter = '';
     }
+    getProduts(refresh: true);
   }
 
+  @action
   Future<void> deleteProduct(ProductModel prod) async {
     Database? dbDex = await helper.db;
     await dbDex!.delete(helper.productModel,

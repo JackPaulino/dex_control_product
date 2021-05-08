@@ -69,6 +69,21 @@ mixin _$HomeStore on HomeStoreBase, Store {
     });
   }
 
+  final _$detailFilterAtom = Atom(name: 'HomeStoreBase.detailFilter');
+
+  @override
+  String get detailFilter {
+    _$detailFilterAtom.reportRead();
+    return super.detailFilter;
+  }
+
+  @override
+  set detailFilter(String value) {
+    _$detailFilterAtom.reportWrite(value, super.detailFilter, () {
+      super.detailFilter = value;
+    });
+  }
+
   final _$alfaAtom = Atom(name: 'HomeStoreBase.alfa');
 
   @override
@@ -92,11 +107,25 @@ mixin _$HomeStore on HomeStoreBase, Store {
         .run(() => super.getProduts(refresh: refresh));
   }
 
-  final _$aplicFilterAsyncAction = AsyncAction('HomeStoreBase.aplicFilter');
+  final _$deleteProductAsyncAction = AsyncAction('HomeStoreBase.deleteProduct');
 
   @override
-  Future<void> aplicFilter() {
-    return _$aplicFilterAsyncAction.run(() => super.aplicFilter());
+  Future<void> deleteProduct(ProductModel prod) {
+    return _$deleteProductAsyncAction.run(() => super.deleteProduct(prod));
+  }
+
+  final _$HomeStoreBaseActionController =
+      ActionController(name: 'HomeStoreBase');
+
+  @override
+  void aplyFilter({dynamic value, required int type}) {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.aplyFilter');
+    try {
+      return super.aplyFilter(value: value, type: type);
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override
@@ -106,6 +135,7 @@ helper: ${helper},
 user: ${user},
 listProdut: ${listProdut},
 filter: ${filter},
+detailFilter: ${detailFilter},
 alfa: ${alfa}
     ''';
   }

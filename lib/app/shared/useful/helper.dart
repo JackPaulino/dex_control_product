@@ -10,10 +10,10 @@ class DataBaseHelper {
   final String productModel = 'productTABLE';
   final String idProduct = 'id';
   final String nameProduct = 'name';
-  final String img = 'image';
-  final String preco = 'price';
-  final String quant = 'stock';
-  final String dateRegister = 'date_register';
+  final String image = 'image';
+  final String price = 'price';
+  final String stock = 'stock';
+  final String dateModify = 'date_modify';
 
 // Classe User
   final String userModel = 'userTABLE';
@@ -53,10 +53,10 @@ class DataBaseHelper {
     await db.execute("CREATE TABLE $productModel(" +
         "$idProduct INTEGER PRIMARY KEY AUTOINCREMENT," +
         "$nameProduct TEXT," +
-        "$img TEXT," +
-        "$preco FLOAT," +
-        "$quant FLOAT," +
-        "$dateRegister TEXT)");
+        "$image TEXT," +
+        "$price FLOAT," +
+        "$stock FLOAT," +
+        "$dateModify TEXT)");
 
     await db.execute("CREATE TABLE $loginModel(" +
         "$idLogin INTEGER PRIMARY KEY AUTOINCREMENT," +

@@ -6,6 +6,7 @@ import 'package:dex_control_product/app/shared/useful/app_colors.dart';
 import 'package:dex_control_product/app/shared/useful/custom_decimal.dart';
 import 'package:dex_control_product/app/shared/useful/text_style.dart';
 import 'package:dex_control_product/app/shared/widget/custom_dialog.dart';
+import 'package:dex_control_product/app/shared/widget/custom_dialog_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -16,15 +17,13 @@ import 'product/product_page.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
-  final int totalPage;
   final UserModel user;
   final List<ProductModel> products;
   const HomePage(
       {Key? key,
       this.title = "Home",
       required this.user,
-      required this.products,
-      required this.totalPage})
+      required this.products})
       : super(key: key);
 
   @override
@@ -39,11 +38,10 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
   void initState() {
     super.initState();
     controller.user = widget.user;
-    controller.pageProdut['total_page'] = widget.totalPage;
     controller.listProdut.addAll(widget.products);
   }
 
-  Future<void> _showDatePicker(context) async {
+  Future<void> _showDatePicker(context, {int result = 0}) async {
     final picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -64,11 +62,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
             child: child!);
       },
     );
-    if (picked != null) {
-      /* userController.dtNasc = Appformat.dateHifen.format(picked);
-    userController.dataNascimentoController.text =
-        Appformat.date.format(picked); */
-    }
+    if (picked != null) controller.aplyFilter(value: picked, type: result);
   }
 
   _textfied() {
@@ -125,7 +119,16 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                 snap: true,
                 actions: [
                   PopupMenuButton<int>(
-                      icon: Icon(MdiIcons.filterMenuOutline),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Icon(MdiIcons.filterMenuOutline),
+                            Text('${controller.detailFilter}')
+                          ],
+                        ),
+                      ),
                       elevation: 10,
                       itemBuilder: (context) => <PopupMenuEntry<int>>[
                             PopupMenuItem(child: Text('Data'), value: 0),
@@ -137,12 +140,18 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                       onSelected: (result) {
                         switch (result) {
                           case 0:
-                            _showDatePicker(context);
+                            _showDatePicker(context, result: result);
                             break;
                           case 1:
                             customDialog(context,
                                 title: 'Flitter de Preço',
-                                content: _textfied());
+                                content: _textfied(),
+                                buttons: [
+                                  CustomDialogButton(
+                                      text: 'Aplicar',
+                                      pop: true,
+                                      onPressed: () {})
+                                ]);
                             break;
                           case 2:
                             ordem = !ordem;
@@ -157,8 +166,6 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                           controller.listProdut.length -
                               controller.pageProdut['pass_page'] &&
                       controller.pageProdut["has_more"]) {
-                    print(
-                        '$index == ${controller.listProdut.length} - ${controller.pageProdut['pass_page']} - ${(controller.listProdut.length - controller.pageProdut['pass_page'])}');
                     controller.getProduts();
                   }
                   if (index == controller.listProdut.length &&

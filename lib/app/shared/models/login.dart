@@ -7,7 +7,7 @@ class LoginModel {
 
   LoginModel({required this.id, required this.initLogin, required this.userId});
 
-  LoginModel.fromJson(Map<String, dynamic> json) {
+  LoginModel.fromJson(Map<dynamic, dynamic> json) {
     id = json['id'];
     initLogin = Appformat.dateHifen.parse(json['init_login']);
     userId = json['user'];

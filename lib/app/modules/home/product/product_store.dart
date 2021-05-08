@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dex_control_product/app/modules/home/home_store.dart';
 import 'package:dex_control_product/app/shared/models/product_model.dart';
 import 'package:dex_control_product/app/shared/useful/helper.dart';
+import 'package:dex_control_product/app/shared/useful/text_style.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
@@ -20,21 +21,17 @@ abstract class _ProductStoreBase with Store {
   bool loading = false;
 
   @observable
-  String img64 = '';
-
-  String d = '';
-
-  @observable
   ImagePicker picker = ImagePicker();
 
   @observable
-  ProductModel product = ProductModel(name: '', dateRegister: DateTime.now());
+  ProductModel product = ProductModel(
+      name: '', dateModify: Appformat.dateHifen.format(DateTime.now()));
 
   @observable
   HomeStore homeStore = Modular.get<HomeStore>();
 
   @action
-  Future setImage() async {
+  Future<void> setImage() async {
     await picker
         .getImage(source: ImageSource.camera, maxHeight: 400, maxWidth: 400)
         .then((imgFile) {

@@ -15,10 +15,8 @@ class HomeModule extends Module {
   @override
   final List<ModularRoute> routes = [
     ChildRoute(Modular.initialRoute,
-        child: (_, args) => HomePage(
-            user: args.data[0],
-            products: args.data[1],
-            totalPage: args.data[2]),
+        child: (_, args) =>
+            HomePage(user: args.data[0], products: args.data[1]),
         transition: TransitionType.rightToLeft),
     ChildRoute('/home/product',
         child: (_, args) => ProductPage(product: args.data),

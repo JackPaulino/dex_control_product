@@ -1,11 +1,10 @@
-import 'dart:convert';
-
 import 'package:connectivity/connectivity.dart';
 import 'package:dex_control_product/app/shared/models/login.dart';
 import 'package:dex_control_product/app/shared/models/product_model.dart';
 import 'package:dex_control_product/app/shared/models/user_model.dart';
 import 'package:dex_control_product/app/shared/useful/crypto_password.dart';
 import 'package:dex_control_product/app/shared/useful/helper.dart';
+import 'package:dex_control_product/app/shared/useful/text_style.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:sqflite/sqflite.dart';
@@ -23,9 +22,6 @@ abstract class _SplashStoreBase with Store {
 
   @observable
   String status = '';
-
-  @observable
-  int totalPage = 0;
 
   List<ProductModel> products = [];
 
@@ -116,12 +112,10 @@ abstract class _SplashStoreBase with Store {
           .rawQuery('SELECT  * FROM ${helper.productModel} LIMIT 22 OFFSET 0');
       if (userAutoLogin.length > 0) {
         for (var item in userAutoLogin) {
-          Map<String, dynamic> map = json.decode(json.encode(item));
-          products.add(new ProductModel.fromJson(map));
+          products.add(new ProductModel.fromJson(item));
         }
       }
-      Modular.to.pushReplacementNamed('/home',
-          arguments: [user, products, totalPage]);
+      Modular.to.pushReplacementNamed('/home', arguments: [user, products]);
     } catch (e) {
       print(e);
     }
@@ -132,12 +126,16 @@ abstract class _SplashStoreBase with Store {
     print('insertProduts');
     try {
       Database? dbDex = await helper.db;
-      for (var i = 0; i < 50; i++) {
+      for (var i = 0; i < 200; i++) {
+        var o = 0;
+        if (i > 100) o = 1;
+
         ProductModel prod = ProductModel(
             name: 'Arroz$i',
             price: (3.25 + i),
             stock: (16.0 + i),
-            dateRegister: DateTime.now());
+            dateModify: Appformat.dateHifen
+                .format(DateTime.now().subtract(Duration(days: o))));
         await dbDex!.insert(helper.productModel, prod.toJson());
       }
     } catch (e) {

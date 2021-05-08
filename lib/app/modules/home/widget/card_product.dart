@@ -35,55 +35,55 @@ class _CardProductState extends State<CardProduct> {
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Stack(
-                children: [
-                  Container(
-                    child: Card(
-                        elevation: 5,
-                        child: Hero(
-                            tag: widget.product.name,
-                            child: widget.product.image != null
-                                ? Image.memory(
-                                    base64Decode('${widget.product.image}'),
-                                    fit: BoxFit.contain,
-                                    width: cons.maxWidth * .80,
-                                    height: cons.maxWidth * .80,
-                                    errorBuilder: (context, error, stackTrace) =>
-                                        Container(
-                                            width: cons.maxWidth * .80,
-                                            height: cons.maxWidth * .80,
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: AssetImage(
-                                                        'assets/images/erro.jpg')))))
-                                : Container(
-                                    width: cons.maxWidth * .80,
-                                    height: cons.maxWidth * .80,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(fit: BoxFit.cover, image: AssetImage('assets/images/notimg.jpg')))))),
-                  ),
-                  Positioned(
-                      right: 0,
-                      child: IconButton(
-                          color: AppColors.primary,
-                          icon: Icon(MdiIcons.delete, size: 25),
-                          onPressed: () {
-                            customDialog(context,
-                                icon: Icon(MdiIcons.deleteAlert,
-                                    size: 70, color: Colors.yellow[600]),
-                                content: Text('Deseja excluir o Produto?'),
-                                buttons: [
-                                  CustomDialogButton(
-                                      text: 'Sim',
-                                      pop: true,
-                                      onPressed: () => widget.delteFunc())
-                                ]);
-                          }))
-                ],
-              ),
+              Stack(children: [
+                Container(
+                  child: Card(
+                      elevation: 5,
+                      child: Hero(
+                          tag: widget.product.id.toString(),
+                          child: widget.product.image != null
+                              ? Image.memory(
+                                  base64Decode('${widget.product.image}'),
+                                  fit: BoxFit.contain,
+                                  width: cons.maxWidth * .80,
+                                  height: cons.maxWidth * .80,
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Container(
+                                          width: cons.maxWidth * .80,
+                                          height: cons.maxWidth * .80,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: AssetImage(
+                                                      'assets/images/erro.jpg')))))
+                              : Container(
+                                  width: cons.maxWidth * .80,
+                                  height: cons.maxWidth * .80,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(fit: BoxFit.cover, image: AssetImage('assets/images/notimg.jpg')))))),
+                ),
+                Positioned(
+                    right: 0,
+                    child: IconButton(
+                        color: AppColors.primary,
+                        icon: Icon(MdiIcons.delete, size: 25),
+                        onPressed: () {
+                          customDialog(context,
+                              icon: Icon(MdiIcons.deleteAlert,
+                                  size: 70, color: Colors.orangeAccent[700]),
+                              content: Text('Deseja excluir o Produto?'),
+                              buttons: [
+                                CustomDialogButton(
+                                    text: 'Não', pop: true, onPressed: () {}),
+                                CustomDialogButton(
+                                    text: 'Sim',
+                                    pop: true,
+                                    onPressed: () => widget.delteFunc())
+                              ]);
+                        }))
+              ]),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 2),
                 child: AutoSizeText('${widget.product.name}',

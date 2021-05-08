@@ -39,21 +39,6 @@ mixin _$ProductStore on _ProductStoreBase, Store {
     });
   }
 
-  final _$img64Atom = Atom(name: '_ProductStoreBase.img64');
-
-  @override
-  String get img64 {
-    _$img64Atom.reportRead();
-    return super.img64;
-  }
-
-  @override
-  set img64(String value) {
-    _$img64Atom.reportWrite(value, super.img64, () {
-      super.img64 = value;
-    });
-  }
-
   final _$pickerAtom = Atom(name: '_ProductStoreBase.picker');
 
   @override
@@ -102,7 +87,7 @@ mixin _$ProductStore on _ProductStoreBase, Store {
   final _$setImageAsyncAction = AsyncAction('_ProductStoreBase.setImage');
 
   @override
-  Future<dynamic> setImage() {
+  Future<void> setImage() {
     return _$setImageAsyncAction.run(() => super.setImage());
   }
 
@@ -118,7 +103,6 @@ mixin _$ProductStore on _ProductStoreBase, Store {
     return '''
 helper: ${helper},
 loading: ${loading},
-img64: ${img64},
 picker: ${picker},
 product: ${product},
 homeStore: ${homeStore}
