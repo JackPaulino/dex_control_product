@@ -1,5 +1,5 @@
 import 'package:dex_control_product/app/modules/home/home_store.dart';
-import 'package:dex_control_product/app/modules/home/widget/product.dart';
+import 'package:dex_control_product/app/modules/home/widget/card_product.dart';
 import 'package:dex_control_product/app/shared/models/product_model.dart';
 import 'package:dex_control_product/app/shared/models/user_model.dart';
 import 'package:dex_control_product/app/shared/useful/app_colors.dart';
@@ -118,38 +118,38 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
         return CustomScrollView(
           slivers: [
             SliverAppBar(
-              backgroundColor: AppColors.greenBlueGrayola,
-              title: Text('Bem vindo ${controller.user.name}',
-                  style: StyleText.labelTextField),
-              floating: true,
-              snap: true,
-              actions: [
-                PopupMenuButton<int>(
-                    icon: Icon(MdiIcons.filterMenuOutline),
-                    elevation: 10,
-                    itemBuilder: (context) => <PopupMenuEntry<int>>[
-                          PopupMenuItem(child: Text('Data'), value: 0),
-                          PopupMenuItem(child: Text('Preço'), value: 1),
-                          PopupMenuItem(
-                              child: Text('${controller.alfa[ordem]}'),
-                              value: 2)
-                        ],
-                    onSelected: (result) {
-                      switch (result) {
-                        case 0:
-                          _showDatePicker(context);
-                          break;
-                        case 1:
-                          customDialog(context,
-                              title: 'Flitter de Preço', content: _textfied());
-                          break;
-                        case 2:
-                          ordem = !ordem;
-                          break;
-                      }
-                    }),
-              ],
-            ),
+                backgroundColor: AppColors.greenBlueGrayola,
+                title: Text('Bem vindo ${controller.user.name}',
+                    style: StyleText.labelTextField),
+                floating: true,
+                snap: true,
+                actions: [
+                  PopupMenuButton<int>(
+                      icon: Icon(MdiIcons.filterMenuOutline),
+                      elevation: 10,
+                      itemBuilder: (context) => <PopupMenuEntry<int>>[
+                            PopupMenuItem(child: Text('Data'), value: 0),
+                            PopupMenuItem(child: Text('Preço'), value: 1),
+                            PopupMenuItem(
+                                child: Text('${controller.alfa[ordem]}'),
+                                value: 2)
+                          ],
+                      onSelected: (result) {
+                        switch (result) {
+                          case 0:
+                            _showDatePicker(context);
+                            break;
+                          case 1:
+                            customDialog(context,
+                                title: 'Flitter de Preço',
+                                content: _textfied());
+                            break;
+                          case 2:
+                            ordem = !ordem;
+                            break;
+                        }
+                      }),
+                ]),
             SliverGrid(
                 delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
@@ -197,19 +197,23 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                           builder: (context) => ProductPage(
                               product: controller.listProdut[index])));
                     },
-                    child: CardProduct(
-                        product: controller.listProdut[index],
-                        details: () {
-                          Modular.to.pushNamed('/home/product',
-                              arguments: controller.listProdut[index]);
-                        }),
+                    child: Observer(builder: (_) {
+                      return CardProduct(
+                          product: controller.listProdut[index],
+                          delteFunc: () => controller
+                              .deleteProduct(controller.listProdut[index]),
+                          details: () {
+                            Modular.to.pushNamed('/home/product',
+                                arguments: controller.listProdut[index]);
+                          });
+                    }),
                   );
-                }, childCount: controller.pageProdut['total_page']),
+                }, childCount: controller.listProdut.length),
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 190.0,
                   mainAxisSpacing: 10.0,
                   crossAxisSpacing: 1.0,
-                  childAspectRatio: .66,
+                  childAspectRatio: .70,
                 ))
           ],
         );

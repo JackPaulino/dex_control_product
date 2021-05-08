@@ -87,8 +87,9 @@ mixin _$HomeStore on HomeStoreBase, Store {
   final _$getProdutsAsyncAction = AsyncAction('HomeStoreBase.getProduts');
 
   @override
-  Future<void> getProduts() {
-    return _$getProdutsAsyncAction.run(() => super.getProduts());
+  Future<void> getProduts({bool refresh = false}) {
+    return _$getProdutsAsyncAction
+        .run(() => super.getProduts(refresh: refresh));
   }
 
   final _$aplicFilterAsyncAction = AsyncAction('HomeStoreBase.aplicFilter');

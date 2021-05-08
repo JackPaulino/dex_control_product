@@ -96,7 +96,7 @@ mixin _$SplashStore on _SplashStoreBase, Store {
       AsyncAction('_SplashStoreBase.insertLogAcess');
 
   @override
-  Future<void> insertLogAcess({int? user}) {
+  Future<void> insertLogAcess({int user = 0}) {
     return _$insertLogAcessAsyncAction
         .run(() => super.insertLogAcess(user: user));
   }

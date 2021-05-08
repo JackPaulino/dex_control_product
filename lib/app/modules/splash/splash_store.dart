@@ -6,7 +6,6 @@ import 'package:dex_control_product/app/shared/models/product_model.dart';
 import 'package:dex_control_product/app/shared/models/user_model.dart';
 import 'package:dex_control_product/app/shared/useful/crypto_password.dart';
 import 'package:dex_control_product/app/shared/useful/helper.dart';
-import 'package:dex_control_product/app/shared/useful/text_style.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:sqflite/sqflite.dart';
@@ -96,11 +95,11 @@ abstract class _SplashStoreBase with Store {
   }
 
   @action //Inserir LoginModel
-  Future<void> insertLogAcess({int? user}) async {
+  Future<void> insertLogAcess({int user = 0}) async {
     try {
       Database? dbDex = await helper.db;
-      LoginModel login = LoginModel(
-          initLogin: Appformat.dateHifen.format(DateTime.now()), userId: user);
+      LoginModel login =
+          LoginModel(initLogin: DateTime.now(), userId: user, id: 0);
       var result = await dbDex!.insert(helper.loginModel, login.toJson());
       print(result);
     } catch (e) {
@@ -108,27 +107,21 @@ abstract class _SplashStoreBase with Store {
     }
   }
 
-  Future<int?> countProdut() async {
-    Database? dbDex = await helper.db;
-    totalPage += Sqflite.firstIntValue(
-        await dbDex!.rawQuery('SELECT COUNT(*) FROM ${helper.productModel}'))!;
-  }
-
   @action
   Future<void> initListProduts() async {
     print('getProduts');
     try {
       Database? dbDex = await helper.db;
-      List<Map> userAutoLogin = await dbDex!.rawQuery(
-          'SELECT  ${helper.productModel}.* FROM ${helper.productModel} LIMIT 22 OFFSET 0');
+      List<Map> userAutoLogin = await dbDex!
+          .rawQuery('SELECT  * FROM ${helper.productModel} LIMIT 22 OFFSET 0');
       if (userAutoLogin.length > 0) {
         for (var item in userAutoLogin) {
           Map<String, dynamic> map = json.decode(json.encode(item));
           products.add(new ProductModel.fromJson(map));
         }
       }
-      countProdut().then((value) => Modular.to.pushReplacementNamed('/home',
-          arguments: [user, products, totalPage]));
+      Modular.to.pushReplacementNamed('/home',
+          arguments: [user, products, totalPage]);
     } catch (e) {
       print(e);
     }
@@ -139,9 +132,12 @@ abstract class _SplashStoreBase with Store {
     print('insertProduts');
     try {
       Database? dbDex = await helper.db;
-      for (var i = 0; i < 100; i++) {
+      for (var i = 0; i < 50; i++) {
         ProductModel prod = ProductModel(
-            name: 'Arroz$i', img: '$i', preco: (3.25 + i), quant: (16.0 + i));
+            name: 'Arroz$i',
+            price: (3.25 + i),
+            stock: (16.0 + i),
+            dateRegister: DateTime.now());
         await dbDex!.insert(helper.productModel, prod.toJson());
       }
     } catch (e) {

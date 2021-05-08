@@ -10,9 +10,10 @@ class DataBaseHelper {
   final String productModel = 'productTABLE';
   final String idProduct = 'id';
   final String nameProduct = 'name';
-  final String img = 'img';
-  final String preco = 'preco';
-  final String quant = 'quant';
+  final String img = 'image';
+  final String preco = 'price';
+  final String quant = 'stock';
+  final String dateRegister = 'date_register';
 
 // Classe User
   final String userModel = 'userTABLE';
@@ -27,7 +28,6 @@ class DataBaseHelper {
   final String userLoginId = 'user_id';
 
   Future<Database?> get db async {
-    // ignore: unnecessary_null_comparison
     if (_db == null) {
       return await initDb();
     } else {
@@ -55,7 +55,8 @@ class DataBaseHelper {
         "$nameProduct TEXT," +
         "$img TEXT," +
         "$preco FLOAT," +
-        "$quant FLOAT)");
+        "$quant FLOAT," +
+        "$dateRegister TEXT)");
 
     await db.execute("CREATE TABLE $loginModel(" +
         "$idLogin INTEGER PRIMARY KEY AUTOINCREMENT," +

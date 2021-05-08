@@ -25,10 +25,11 @@ abstract class _LoginStoreBase with Store {
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @observable
-  TextEditingController ctrlLogin = new TextEditingController();
+  TextEditingController ctrlLogin = new TextEditingController(text: 'Jackson');
 
   @observable
-  TextEditingController ctrlSenha = new TextEditingController();
+  TextEditingController ctrlSenha =
+      new TextEditingController(text: 'program2021');
 
   @observable
   UserModel user = UserModel();
@@ -41,6 +42,9 @@ abstract class _LoginStoreBase with Store {
 
   @observable
   bool visibilityPassword = true;
+
+  @observable
+  int totalPage = 0;
 
   @action
   void setvisibility() => visibilityPassword = !visibilityPassword;
@@ -126,10 +130,17 @@ abstract class _LoginStoreBase with Store {
     }
   }
 
+  Future<int?> countProdut() async {
+    Database? dbDex = await helper.db;
+    totalPage += Sqflite.firstIntValue(
+        await dbDex!.rawQuery('SELECT COUNT(*) FROM ${helper.productModel}'))!;
+  }
+
   @action
   Future<void> initListProduts() async {
     print('getProduts');
     try {
+      countProdut();
       Database? dbDex = await helper.db;
       List<Map> userAutoLogin = await dbDex!.rawQuery(
           'SELECT  ${helper.productModel}.* FROM ${helper.productModel} LIMIT 22 OFFSET 0');
@@ -139,7 +150,8 @@ abstract class _LoginStoreBase with Store {
           products.add(new ProductModel.fromJson(map));
         }
       }
-      Modular.to.pushReplacementNamed('/home', arguments: [user, products]);
+      Modular.to.pushReplacementNamed('/home',
+          arguments: [user, products, totalPage]);
     } catch (e) {
       print(e);
     }

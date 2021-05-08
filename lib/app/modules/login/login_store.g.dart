@@ -145,6 +145,21 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
+  final _$totalPageAtom = Atom(name: '_LoginStoreBase.totalPage');
+
+  @override
+  int get totalPage {
+    _$totalPageAtom.reportRead();
+    return super.totalPage;
+  }
+
+  @override
+  set totalPage(int value) {
+    _$totalPageAtom.reportWrite(value, super.totalPage, () {
+      super.totalPage = value;
+    });
+  }
+
   final _$insertUseModelAsyncAction =
       AsyncAction('_LoginStoreBase.insertUseModel');
 
@@ -216,7 +231,8 @@ ctrlSenha: ${ctrlSenha},
 user: ${user},
 loading: ${loading},
 status: ${status},
-visibilityPassword: ${visibilityPassword}
+visibilityPassword: ${visibilityPassword},
+totalPage: ${totalPage}
     ''';
   }
 }
