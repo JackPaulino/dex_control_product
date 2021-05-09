@@ -37,21 +37,22 @@ abstract class HomeStoreBase with Store {
   @observable
   Map<bool, String> alfa = {true: 'A - Z', false: 'Z - A'};
 
+  Map<bool, String> ascDesc = {true: 'DESC', false: 'ASC'};
+
   @action
   Future<void> getProduts({bool refresh = false}) async {
     print('getProduts');
     pageProdut['error'] = false;
     try {
       if (refresh) {
-        pageProdut['limit'] = '22';
-        pageProdut['offset'] = '0';
+        pageProdut['limit'] = 22;
+        pageProdut['offset'] = 0;
         pageProdut['has_more'] = true;
         listProdut = <ProductModel>[].asObservable();
       }
       Database? dbDex = await helper.db;
       List<Map> products = await dbDex!.rawQuery(
-          'SELECT * FROM ${helper.productModel} $filter LIMIT ${pageProdut['limit']} OFFSET ${pageProdut['offset']} ');
-
+          'SELECT * FROM ${helper.productModel} $filter LIMIT ${pageProdut['limit']} OFFSET ${pageProdut['offset']}');
       if (products.length > 0) {
         for (var item in products) {
           ProductModel prod = new ProductModel.fromJson(item);
@@ -59,7 +60,6 @@ abstract class HomeStoreBase with Store {
             listProdut.add(prod);
           }
         }
-        pageProdut['offset'] += pageProdut['limit'];
       } else
         pageProdut['has_more'] = false;
     } catch (e) {
@@ -71,18 +71,17 @@ abstract class HomeStoreBase with Store {
   void aplyFilter({dynamic value, required int type}) {
     switch (type) {
       case 0:
-        {
-          filter =
-              'WHERE ${helper.dateModify} = \'${Appformat.dateHifen.format(value)}\'';
-          detailFilter = 'Data: ${Appformat.dateHifen.format(value)}';
-        }
+        filter =
+            'WHERE ${helper.dateModify} = \'${Appformat.dateHifen.format(value)}\'';
+        detailFilter = 'Data: ${Appformat.date.format(value)}';
         break;
       case 1:
-        {
-          filter =
-              'WHERE ${helper.price} = \'${Appformat.dateHifen.format(value)}\'';
-          detailFilter = 'Data: ${Appformat.dateHifen.format(value)}';
-        }
+        filter = 'WHERE ${helper.price} = ${Appformat.quantity.parse(value)}';
+        detailFilter = 'Preço: $value';
+        break;
+      case 2:
+        filter = 'ORDER BY LOWER(${helper.nameProduct}) ${ascDesc[value]}';
+        detailFilter = 'ORDER: ${alfa[value]}';
         break;
       default:
         filter = '';

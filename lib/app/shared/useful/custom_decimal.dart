@@ -8,7 +8,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
       return newValue;
     }
 
-    Appformat.quantity.minimumFractionDigits = 0;
+    Appformat.quantity.minimumFractionDigits = 2;
 
     double value = double.parse(newValue.text);
     String newText = Appformat.quantity.format(value / 100);

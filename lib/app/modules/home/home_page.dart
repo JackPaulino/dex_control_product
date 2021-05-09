@@ -65,7 +65,8 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
     if (picked != null) controller.aplyFilter(value: picked, type: result);
   }
 
-  _textfied() {
+  _textfied({int result = 1}) {
+    qtdController.text = '0';
     return Row(
       children: [
         Expanded(
@@ -91,7 +92,11 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                     labelText: 'Preço',
                     labelStyle:
                         TextStyle(fontSize: 20, color: AppColors.primary)),
-                onChanged: (value) {},
+                onSubmitted: (value) {
+                  if (qtdController.text != '')
+                    controller.aplyFilter(
+                        value: qtdController.text, type: result);
+                },
                 inputFormatters: [
               LengthLimitingTextInputFormatter(7),
               // ignore: deprecated_member_use
@@ -135,7 +140,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                             PopupMenuItem(child: Text('Preço'), value: 1),
                             PopupMenuItem(
                                 child: Text('${controller.alfa[ordem]}'),
-                                value: 2)
+                                value: 2),
+                            PopupMenuItem(
+                                child: Text('Limpar Filtro'), value: 3),
                           ],
                       onSelected: (result) {
                         switch (result) {
@@ -145,17 +152,25 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                           case 1:
                             customDialog(context,
                                 title: 'Flitter de Preço',
-                                content: _textfied(),
+                                content: _textfied(result: result),
                                 buttons: [
                                   CustomDialogButton(
                                       text: 'Aplicar',
                                       pop: true,
-                                      onPressed: () {})
+                                      onPressed: () {
+                                        if (qtdController.text != '')
+                                          controller.aplyFilter(
+                                              value: qtdController.text,
+                                              type: result);
+                                      })
                                 ]);
                             break;
                           case 2:
                             ordem = !ordem;
+                            controller.aplyFilter(value: ordem, type: result);
                             break;
+                          default:
+                            controller.aplyFilter(value: '', type: result);
                         }
                       }),
                 ]),

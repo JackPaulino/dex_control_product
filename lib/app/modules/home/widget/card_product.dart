@@ -76,7 +76,10 @@ class _CardProductState extends State<CardProduct> {
                               content: Text('Deseja excluir o Produto?'),
                               buttons: [
                                 CustomDialogButton(
-                                    text: 'Não', pop: true, onPressed: () {}),
+                                    text: 'Não',
+                                    pop: true,
+                                    onPressed: () {},
+                                    confBtnColor: false),
                                 CustomDialogButton(
                                     text: 'Sim',
                                     pop: true,

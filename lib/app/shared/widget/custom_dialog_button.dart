@@ -5,9 +5,14 @@ class CustomDialogButton extends StatelessWidget {
   final String text;
   final Function onPressed;
   final bool pop;
+  final bool confBtnColor;
 
   const CustomDialogButton(
-      {Key? key, required this.text, required this.onPressed, this.pop = false})
+      {Key? key,
+      required this.text,
+      required this.onPressed,
+      this.pop = false,
+      this.confBtnColor = true})
       : super(key: key);
 
   @override
@@ -29,7 +34,7 @@ class CustomDialogButton extends StatelessWidget {
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.w700)),
-          color: AppColors.primary,
+          color: confBtnColor ? Colors.green : AppColors.primary,
           onPressed: () {
             if (pop) Navigator.pop(context);
             onPressed();
