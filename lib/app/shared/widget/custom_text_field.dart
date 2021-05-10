@@ -1,6 +1,8 @@
 import 'package:dex_control_product/app/shared/useful/app_colors.dart';
+import 'package:dex_control_product/app/shared/useful/custom_decimal.dart';
 import 'package:dex_control_product/app/shared/useful/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // ignore: must_be_immutable
 class CustomTextField extends StatefulWidget {
@@ -8,9 +10,10 @@ class CustomTextField extends StatefulWidget {
   String hint;
   TextEditingController controller;
   Function validator;
-  //Function onChanged;
-  bool password;
+  Function onFieldSubmitted;
+  TextCapitalization textCapitalization;
   bool visibility;
+  TextAlign textAlign;
   IconButton? suffixIcon;
   TextInputType keyboardType;
 
@@ -19,7 +22,9 @@ class CustomTextField extends StatefulWidget {
       required this.hint,
       required this.controller,
       required this.validator,
-      this.password = false,
+      required this.onFieldSubmitted,
+      this.textCapitalization = TextCapitalization.none,
+      this.textAlign = TextAlign.start,
       this.suffixIcon,
       this.visibility = false,
       required this.keyboardType});
@@ -38,20 +43,33 @@ class _CustomTextFieldState extends State<CustomTextField> {
           obscureText: widget.visibility,
           validator: (value) => widget.validator(value),
           style: StyleText.labelTextField,
+          textAlign: widget.textAlign,
+          keyboardType: widget.keyboardType,
+          textCapitalization: widget.textCapitalization,
           decoration: new InputDecoration(
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50),
-                borderSide:
-                    BorderSide(color: AppColors.greenBlueGrayola, width: 2)),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50),
-                borderSide:
-                    BorderSide(color: AppColors.greenBlueGrayola, width: 2)),
-            suffixIcon: widget.password ? widget.suffixIcon : null,
-            labelText: widget.label,
-            labelStyle: TextStyle(color: AppColors.greenBlueGrayola),
-            hintText: widget.hint,
-          ),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide:
+                      BorderSide(color: AppColors.greenBlueGrayola, width: 2)),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide:
+                      BorderSide(color: AppColors.greenBlueGrayola, width: 2)),
+              suffixIcon: widget.suffixIcon,
+              labelText: widget.label,
+              labelStyle: TextStyle(color: AppColors.greenBlueGrayola),
+              hintText: widget.hint),
+          onFieldSubmitted: (value) => widget.onFieldSubmitted(value),
+          inputFormatters: widget.keyboardType == TextInputType.number
+              ? [
+                  LengthLimitingTextInputFormatter(7),
+                  // ignore: deprecated_member_use
+                  WhitelistingTextInputFormatter.digitsOnly,
+                  // ignore: deprecated_member_use
+                  BlacklistingTextInputFormatter.singleLineFormatter,
+                  new CurrencyInputFormatter()
+                ]
+              : [],
         ));
   }
 }

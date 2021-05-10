@@ -73,15 +73,16 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
                 CustomTextField(
                     label: 'Login',
                     hint: 'Digite o Login',
+                    onFieldSubmitted: (value) {},
                     keyboardType: TextInputType.name,
                     controller: controller.ctrlLogin,
                     validator: controller.validaLogin),
                 CustomTextField(
                     label: 'Senha',
                     hint: 'Digite a Senha',
+                    onFieldSubmitted: (value) {},
                     controller: controller.ctrlSenha,
                     validator: controller.validaSenha,
-                    password: true,
                     visibility: controller.visibilityPassword,
                     keyboardType: TextInputType.visiblePassword,
                     suffixIcon: IconButton(

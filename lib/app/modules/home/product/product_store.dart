@@ -5,6 +5,7 @@ import 'package:dex_control_product/app/modules/home/home_store.dart';
 import 'package:dex_control_product/app/shared/models/product_model.dart';
 import 'package:dex_control_product/app/shared/useful/helper.dart';
 import 'package:dex_control_product/app/shared/useful/text_style.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
@@ -21,6 +22,9 @@ abstract class _ProductStoreBase with Store {
   bool loading = false;
 
   @observable
+  bool edit = false;
+
+  @observable
   ImagePicker picker = ImagePicker();
 
   @observable
@@ -30,6 +34,21 @@ abstract class _ProductStoreBase with Store {
   @observable
   HomeStore homeStore = Modular.get<HomeStore>();
 
+  @observable
+  TextEditingController nameController = new TextEditingController();
+
+  @observable
+  TextEditingController priceController = new TextEditingController();
+
+  @observable
+  TextEditingController stockController = new TextEditingController();
+
+  @observable
+  GlobalKey<FormState> productForm = GlobalKey<FormState>();
+
+  @action
+  void setEdit() => edit = !edit;
+
   @action
   Future<void> setImage() async {
     await picker
@@ -37,7 +56,7 @@ abstract class _ProductStoreBase with Store {
         .then((imgFile) {
       if (imgFile != null) {
         final bytes = File(imgFile.path).readAsBytesSync();
-        product.image = base64Encode(bytes);
+        product = product.copyWith(image: base64Encode(bytes));
         updateCard(product);
       } else {
         print('No image selected.');

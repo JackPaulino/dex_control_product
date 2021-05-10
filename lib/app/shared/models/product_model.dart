@@ -14,6 +14,22 @@ class ProductModel {
       this.stock,
       required this.dateModify});
 
+  copyWith(
+      {int? id,
+      String? name,
+      String? image,
+      double? price,
+      double? stock,
+      String? dateModify}) {
+    return ProductModel(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        image: image ?? this.image,
+        price: price ?? this.price,
+        stock: stock ?? this.stock,
+        dateModify: dateModify ?? this.dateModify);
+  }
+
   ProductModel.fromJson(Map<dynamic, dynamic> json) {
     id = json['id'];
     name = json['name'];

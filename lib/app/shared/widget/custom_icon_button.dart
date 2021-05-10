@@ -24,7 +24,7 @@ class CustomIconButton extends StatelessWidget {
             decoration: BoxDecoration(
                 color: ativeButton ? AppColors.primary : Colors.blueGrey[100],
                 borderRadius: BorderRadius.circular(25)),
-            child: IconButton(icon: icon, onPressed: () => onPressed)),
+            child: IconButton(icon: icon, onPressed: () => onPressed())),
         Container(
             width: 66,
             margin: EdgeInsets.only(top: 3),

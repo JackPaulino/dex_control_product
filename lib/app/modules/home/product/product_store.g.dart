@@ -39,6 +39,21 @@ mixin _$ProductStore on _ProductStoreBase, Store {
     });
   }
 
+  final _$editAtom = Atom(name: '_ProductStoreBase.edit');
+
+  @override
+  bool get edit {
+    _$editAtom.reportRead();
+    return super.edit;
+  }
+
+  @override
+  set edit(bool value) {
+    _$editAtom.reportWrite(value, super.edit, () {
+      super.edit = value;
+    });
+  }
+
   final _$pickerAtom = Atom(name: '_ProductStoreBase.picker');
 
   @override
@@ -84,6 +99,66 @@ mixin _$ProductStore on _ProductStoreBase, Store {
     });
   }
 
+  final _$nameControllerAtom = Atom(name: '_ProductStoreBase.nameController');
+
+  @override
+  TextEditingController get nameController {
+    _$nameControllerAtom.reportRead();
+    return super.nameController;
+  }
+
+  @override
+  set nameController(TextEditingController value) {
+    _$nameControllerAtom.reportWrite(value, super.nameController, () {
+      super.nameController = value;
+    });
+  }
+
+  final _$priceControllerAtom = Atom(name: '_ProductStoreBase.priceController');
+
+  @override
+  TextEditingController get priceController {
+    _$priceControllerAtom.reportRead();
+    return super.priceController;
+  }
+
+  @override
+  set priceController(TextEditingController value) {
+    _$priceControllerAtom.reportWrite(value, super.priceController, () {
+      super.priceController = value;
+    });
+  }
+
+  final _$stockControllerAtom = Atom(name: '_ProductStoreBase.stockController');
+
+  @override
+  TextEditingController get stockController {
+    _$stockControllerAtom.reportRead();
+    return super.stockController;
+  }
+
+  @override
+  set stockController(TextEditingController value) {
+    _$stockControllerAtom.reportWrite(value, super.stockController, () {
+      super.stockController = value;
+    });
+  }
+
+  final _$productFormAtom = Atom(name: '_ProductStoreBase.productForm');
+
+  @override
+  GlobalKey<FormState> get productForm {
+    _$productFormAtom.reportRead();
+    return super.productForm;
+  }
+
+  @override
+  set productForm(GlobalKey<FormState> value) {
+    _$productFormAtom.reportWrite(value, super.productForm, () {
+      super.productForm = value;
+    });
+  }
+
   final _$setImageAsyncAction = AsyncAction('_ProductStoreBase.setImage');
 
   @override
@@ -98,14 +173,33 @@ mixin _$ProductStore on _ProductStoreBase, Store {
     return _$updateCardAsyncAction.run(() => super.updateCard(prod));
   }
 
+  final _$_ProductStoreBaseActionController =
+      ActionController(name: '_ProductStoreBase');
+
+  @override
+  void setEdit() {
+    final _$actionInfo = _$_ProductStoreBaseActionController.startAction(
+        name: '_ProductStoreBase.setEdit');
+    try {
+      return super.setEdit();
+    } finally {
+      _$_ProductStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 helper: ${helper},
 loading: ${loading},
+edit: ${edit},
 picker: ${picker},
 product: ${product},
-homeStore: ${homeStore}
+homeStore: ${homeStore},
+nameController: ${nameController},
+priceController: ${priceController},
+stockController: ${stockController},
+productForm: ${productForm}
     ''';
   }
 }

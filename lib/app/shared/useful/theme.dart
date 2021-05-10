@@ -11,7 +11,7 @@ class AppTheme {
       fontFamily: 'Open-sans',
       primaryColor: AppColors.primary,
       appBarTheme: AppBarTheme(brightness: Brightness.dark),
-      scaffoldBackgroundColor: AppColors.greenBlueGrayola,
+      scaffoldBackgroundColor: Colors.amber[50],
       inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(),
           suffixStyle: TextStyle(color: AppColors.primary)));

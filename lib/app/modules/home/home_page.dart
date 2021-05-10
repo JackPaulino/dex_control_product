@@ -3,10 +3,10 @@ import 'package:dex_control_product/app/modules/home/widget/card_product.dart';
 import 'package:dex_control_product/app/shared/models/product_model.dart';
 import 'package:dex_control_product/app/shared/models/user_model.dart';
 import 'package:dex_control_product/app/shared/useful/app_colors.dart';
-import 'package:dex_control_product/app/shared/useful/custom_decimal.dart';
 import 'package:dex_control_product/app/shared/useful/text_style.dart';
 import 'package:dex_control_product/app/shared/widget/custom_dialog.dart';
 import 'package:dex_control_product/app/shared/widget/custom_dialog_button.dart';
+import 'package:dex_control_product/app/shared/widget/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -65,54 +65,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
     if (picked != null) controller.aplyFilter(value: picked, type: result);
   }
 
-  _textfied({int result = 1}) {
-    qtdController.text = '0';
-    return Row(
-      children: [
-        Expanded(
-            child: TextField(
-                controller: qtdController,
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.black),
-                showCursor: false,
-                decoration: new InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                        borderSide:
-                            BorderSide(color: AppColors.primary, width: 2)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                        borderSide:
-                            BorderSide(color: AppColors.primary, width: 2)),
-                    hintText: '0',
-                    labelText: 'Preço',
-                    labelStyle:
-                        TextStyle(fontSize: 20, color: AppColors.primary)),
-                onSubmitted: (value) {
-                  if (qtdController.text != '')
-                    controller.aplyFilter(
-                        value: qtdController.text, type: result);
-                },
-                inputFormatters: [
-              LengthLimitingTextInputFormatter(7),
-              // ignore: deprecated_member_use
-              WhitelistingTextInputFormatter.digitsOnly,
-              // ignore: deprecated_member_use
-              BlacklistingTextInputFormatter.singleLineFormatter,
-              new CurrencyInputFormatter()
-            ]))
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Observer(builder: (_) {
         return CustomScrollView(
           slivers: [
@@ -152,7 +107,18 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                           case 1:
                             customDialog(context,
                                 title: 'Flitter de Preço',
-                                content: _textfied(result: result),
+                                content: CustomTextField(
+                                    label: 'Preço',
+                                    hint: '0,00',
+                                    validator: () {},
+                                    keyboardType: TextInputType.number,
+                                    textAlign: TextAlign.center,
+                                    controller: qtdController,
+                                    onFieldSubmitted: (value) {
+                                      if (value != '')
+                                        controller.aplyFilter(
+                                            value: value, type: result);
+                                    }),
                                 buttons: [
                                   CustomDialogButton(
                                       text: 'Aplicar',
