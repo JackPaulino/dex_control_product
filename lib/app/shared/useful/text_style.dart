@@ -33,7 +33,7 @@ class Appformat {
   static var money =
       new NumberFormat.compactSimpleCurrency(locale: 'pt', decimalDigits: 2);
   static var quantity = new NumberFormat("###,###.###", "pt-br");
-  static var quant = new NumberFormat("#.###", "en_US");
+  static var quant = new NumberFormat("###.###", "en_US");
   static var date = new DateFormat('dd/MM/yyyy');
   static var day = new DateFormat.EEEE('pt_BR');
   static var dateHifen = new DateFormat('yyyy-MM-dd');

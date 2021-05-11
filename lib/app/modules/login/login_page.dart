@@ -48,39 +48,17 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
                         image: DecorationImage(
                             fit: BoxFit.none,
                             image: AssetImage('assets/images/logo.jpg')))),
-                /*  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: TextFormField(
-                      controller: controller.ctrlLogin,
-                      obscureText: false,
-                      validator: (value) => controller.validaLogin(value!),
-                      style: StyleText.labelTextField,
-                      decoration: new InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: AppColors.greenBlueGrayola, width: 2)),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: AppColors.greenBlueGrayola, width: 2)),
-                        labelText: 'Login',
-                        labelStyle:
-                            TextStyle(color: AppColors.greenBlueGrayola),
-                        hintText: 'Digite o Login',
-                      ),
-                    )), */
                 CustomTextField(
                     label: 'Login',
                     hint: 'Digite o Login',
-                    onFieldSubmitted: (value) {},
+                    onFieldSubmitted: () {},
                     keyboardType: TextInputType.name,
                     controller: controller.ctrlLogin,
                     validator: controller.validaLogin),
                 CustomTextField(
                     label: 'Senha',
                     hint: 'Digite a Senha',
-                    onFieldSubmitted: (value) {},
+                    onFieldSubmitted: () {},
                     controller: controller.ctrlSenha,
                     validator: controller.validaSenha,
                     visibility: controller.visibilityPassword,
@@ -91,11 +69,7 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
                                 ? Icons.visibility
                                 : Icons.visibility_off,
                             color: AppColors.greenBlueGrayola),
-                        onPressed: () {
-                          setState(() {
-                            controller.setvisibility();
-                          });
-                        })),
+                        onPressed: () => controller.setvisibility())),
                 CustomLoadButton(
                     width: size.resolutionMaxMin() ? width * .10 : width * .16,
                     styleText: size.resolutionMaxMin()
@@ -103,9 +77,7 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
                         : StyleText.textButton,
                     txt: 'Entrar',
                     loading: controller.loading,
-                    onPressed: () {
-                      controller.login();
-                    }),
+                    onPressed: () => controller.login()),
                 Observer(builder: (_) {
                   return controller.status != ''
                       ? Text(controller.status,

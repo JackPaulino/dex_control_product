@@ -166,11 +166,21 @@ mixin _$ProductStore on _ProductStoreBase, Store {
     return _$setImageAsyncAction.run(() => super.setImage());
   }
 
-  final _$updateCardAsyncAction = AsyncAction('_ProductStoreBase.updateCard');
+  final _$insertProductAsyncAction =
+      AsyncAction('_ProductStoreBase.insertProduct');
 
   @override
-  Future<void> updateCard(ProductModel prod) {
-    return _$updateCardAsyncAction.run(() => super.updateCard(prod));
+  Future<void> insertProduct() {
+    return _$insertProductAsyncAction.run(() => super.insertProduct());
+  }
+
+  final _$updateProductAsyncAction =
+      AsyncAction('_ProductStoreBase.updateProduct');
+
+  @override
+  Future<void> updateProduct({bool upProd = true}) {
+    return _$updateProductAsyncAction
+        .run(() => super.updateProduct(upProd: upProd));
   }
 
   final _$_ProductStoreBaseActionController =
@@ -182,6 +192,39 @@ mixin _$ProductStore on _ProductStoreBase, Store {
         name: '_ProductStoreBase.setEdit');
     try {
       return super.setEdit();
+    } finally {
+      _$_ProductStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  String? validName(String texto) {
+    final _$actionInfo = _$_ProductStoreBaseActionController.startAction(
+        name: '_ProductStoreBase.validName');
+    try {
+      return super.validName(texto);
+    } finally {
+      _$_ProductStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  String? validPrice(String texto) {
+    final _$actionInfo = _$_ProductStoreBaseActionController.startAction(
+        name: '_ProductStoreBase.validPrice');
+    try {
+      return super.validPrice(texto);
+    } finally {
+      _$_ProductStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  String? validStock(String texto) {
+    final _$actionInfo = _$_ProductStoreBaseActionController.startAction(
+        name: '_ProductStoreBase.validStock');
+    try {
+      return super.validStock(texto);
     } finally {
       _$_ProductStoreBaseActionController.endAction(_$actionInfo);
     }

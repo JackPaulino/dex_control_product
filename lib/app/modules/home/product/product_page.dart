@@ -16,8 +16,12 @@ import 'dart:convert';
 class ProductPage extends StatefulWidget {
   final String title;
   final ProductModel product;
+  final bool newProduct;
   const ProductPage(
-      {Key? key, this.title = "Detalhes do Produto", required this.product})
+      {Key? key,
+      this.title = "Detalhes do Produto",
+      required this.product,
+      this.newProduct = false})
       : super(key: key);
 
   @override
@@ -30,6 +34,7 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
   void initState() {
     super.initState();
     controller.product = widget.product;
+    controller.edit = widget.newProduct;
   }
 
   @override
@@ -99,16 +104,18 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            CustomIconButton(
-                                text: 'Excluir',
-                                icon:
-                                    Icon(MdiIcons.delete, color: Colors.white),
-                                ativeButton: true,
-                                onPressed: () {
-                                  Modular.to.pop();
-                                  controller.homeStore
-                                      .deleteProduct(controller.product);
-                                }),
+                            !widget.newProduct
+                                ? CustomIconButton(
+                                    text: 'Excluir',
+                                    icon: Icon(MdiIcons.delete,
+                                        color: Colors.white),
+                                    ativeButton: true,
+                                    onPressed: () {
+                                      Modular.to.pop();
+                                      controller.homeStore
+                                          .deleteProduct(controller.product);
+                                    })
+                                : Container(),
                             Column(
                               children: [
                                 AutoSizeText(
@@ -134,19 +141,22 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                                                   fontWeight:
                                                       FontWeight.normal),
                                               text:
-                                                  '${Appformat.quantity.format(controller.product.price)}')
+                                                  '${Appformat.quantity.format(controller.product.stock)}')
                                         ]),
                                     minFontSize: 20),
                               ],
                             ),
-                            CustomIconButton(
-                                text: 'Editar',
-                                icon: Icon(Icons.edit_outlined,
-                                    color: Colors.white),
-                                ativeButton: true,
-                                onPressed: () {
-                                  setState(() => controller.setEdit());
-                                })
+                            !widget.newProduct
+                                ? CustomIconButton(
+                                    text: 'Editar',
+                                    icon: Icon(Icons.edit_outlined,
+                                        color: Colors.white),
+                                    ativeButton: true,
+                                    onPressed: () {
+                                      controller.setEdit();
+                                      controller.preencherProduct();
+                                    })
+                                : Container()
                           ],
                         ),
                         SizedBox(height: 10)
@@ -165,7 +175,8 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                                 CustomTextField(
                                     label: 'Nome',
                                     hint: 'Nome do Produto',
-                                    validator: () {},
+                                    validator: (value) =>
+                                        controller.validName(value),
                                     keyboardType: TextInputType.streetAddress,
                                     textCapitalization:
                                         TextCapitalization.words,
@@ -177,10 +188,11 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                                       child: CustomTextField(
                                           label: 'Preço',
                                           hint: '0,00',
-                                          validator: () {},
                                           keyboardType: TextInputType.number,
                                           controller:
                                               controller.priceController,
+                                          validator: (value) =>
+                                              controller.validPrice(value),
                                           onFieldSubmitted: (value) {}),
                                     ),
                                     SizedBox(width: 8),
@@ -188,7 +200,8 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                                       child: CustomTextField(
                                           label: 'Estoque',
                                           hint: '0,00',
-                                          validator: () {},
+                                          validator: (value) =>
+                                              controller.validStock(value),
                                           keyboardType: TextInputType.number,
                                           controller:
                                               controller.stockController,
@@ -199,13 +212,20 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                                 Container(
                                   width: width,
                                   child: CustomLoadButton(
-                                      width: width * .16,
+                                      width: width * .10,
                                       styleText: StyleText.textButton,
-                                      txt: 'Salvar',
+                                      txt: widget.newProduct
+                                          ? 'Salvar'
+                                          : 'Editar',
                                       loading: controller.loading,
                                       onPressed: () {
                                         if (controller.productForm.currentState!
-                                            .validate()) print('Valide');
+                                            .validate()) {
+                                          widget.newProduct
+                                              ? controller.insertProduct()
+                                              : controller.updateProduct(
+                                                  upProd: true);
+                                        }
                                       }),
                                 ),
                               ],

@@ -9,7 +9,7 @@ class HomeModule extends Module {
   @override
   final List<Bind> binds = [
     Bind.lazySingleton((i) => HomeStore()),
-    Bind((i) => ProductStore())
+    Bind.lazySingleton((i) => ProductStore())
   ];
 
   @override
@@ -18,8 +18,9 @@ class HomeModule extends Module {
         child: (_, args) =>
             HomePage(user: args.data[0], products: args.data[1]),
         transition: TransitionType.rightToLeft),
-    ChildRoute('/home/product',
-        child: (_, args) => ProductPage(product: args.data),
+    ChildRoute('/product',
+        child: (_, args) =>
+            ProductPage(product: args.data[0], newProduct: args.data[1]),
         transition: TransitionType.rightToLeft),
   ];
 }

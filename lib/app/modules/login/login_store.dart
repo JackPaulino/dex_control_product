@@ -57,7 +57,7 @@ abstract class _LoginStoreBase with Store {
 
   @action
   String? validaSenha(String texto) {
-    if (texto.isEmpty || ctrlSenha.text.length < 5) {
+    if (texto.isEmpty || ctrlSenha.text.length <= 6) {
       return "Digite a Senha com no minimo 6 digitos";
     }
     return null;

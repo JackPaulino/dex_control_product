@@ -60,6 +60,8 @@ abstract class HomeStoreBase with Store {
             listProdut.add(prod);
           }
         }
+        pageProdut['has_more'] = true;
+        pageProdut['offset'] += pageProdut['limit'];
       } else
         pageProdut['has_more'] = false;
     } catch (e) {

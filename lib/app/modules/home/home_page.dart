@@ -179,23 +179,14 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                                       AppColors.loading))));
                     }
                   }
-                  return GestureDetector(
-                    onTap: () {
-                      Modular.to.push(MaterialPageRoute(
-                          builder: (context) => ProductPage(
-                              product: controller.listProdut[index])));
-                    },
-                    child: Observer(builder: (_) {
-                      return CardProduct(
-                          product: controller.listProdut[index],
-                          delteFunc: () => controller
-                              .deleteProduct(controller.listProdut[index]),
-                          details: () {
-                            Modular.to.pushNamed('/home/product',
-                                arguments: controller.listProdut[index]);
-                          });
-                    }),
-                  );
+                  return CardProduct(
+                      product: controller.listProdut[index],
+                      delteFunc: () => controller
+                          .deleteProduct(controller.listProdut[index]),
+                      details: () {
+                        Modular.to.pushNamed('/home/product',
+                            arguments: [controller.listProdut[index],false]);
+                      });
                 }, childCount: controller.listProdut.length),
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 190.0,
@@ -206,10 +197,24 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
           ],
         );
       }),
-      /* floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
-      ), */
+      floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          tooltip: 'Create',
+          onPressed: () {
+            ProductModel prod = ProductModel(
+                name: 'Novo Produto',
+                price: 0.00,
+                stock: 0.00,
+                dateModify: Appformat.dateHifen.format(DateTime.now()));
+            Modular.to.pushNamed('/home/product', arguments: [prod, true]);
+          }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        notchMargin: 5,
+        color: AppColors.greenBlueGrayola,
+        child: Container(height: 40),
+      ),
     );
   }
 }

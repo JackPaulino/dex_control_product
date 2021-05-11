@@ -50,14 +50,48 @@ abstract class _ProductStoreBase with Store {
   void setEdit() => edit = !edit;
 
   @action
+  void preencherProduct() {
+    nameController.text = product.name;
+    priceController.text = product.price.toString();
+    stockController.text = product.stock.toString();
+  }
+
+  @action
+  String? validName(String texto) {
+    if (texto.isEmpty) {
+      return "Digite o nome do Produto";
+    }
+    return null;
+  }
+
+  @action
+  String? validPrice(String texto) {
+    if (texto.isEmpty) {
+      return "Digite o preço do Produto";
+    }
+    return null;
+  }
+
+  @action
+  String? validStock(String texto) {
+    if (texto.isEmpty) {
+      return "Digite a quantidade de estoque";
+    }
+    return null;
+  }
+
+  @action
   Future<void> setImage() async {
     await picker
         .getImage(source: ImageSource.camera, maxHeight: 400, maxWidth: 400)
-        .then((imgFile) {
+        .then((imgFile) async {
       if (imgFile != null) {
         final bytes = File(imgFile.path).readAsBytesSync();
         product = product.copyWith(image: base64Encode(bytes));
-        updateCard(product);
+        Database? dbDex = await helper.db;
+        await dbDex!.update(helper.productModel, product.toJson(),
+            where: "${helper.idProduct}=?", whereArgs: [product.id]);
+        homeStore.getProduts(refresh: true);
       } else {
         print('No image selected.');
       }
@@ -65,10 +99,38 @@ abstract class _ProductStoreBase with Store {
   }
 
   @action
-  Future<void> updateCard(ProductModel prod) async {
-    Database? dbDex = await helper.db;
-    await dbDex!.update(helper.productModel, prod.toJson(),
-        where: "${helper.idProduct}=?", whereArgs: [prod.id]);
-    homeStore.getProduts(refresh: true);
+  Future<void> insertProduct() async {
+    try {
+      product = product.copyWith(
+          name: nameController.text == '' ? null : nameController.text,
+          price: Appformat.quantity.parse(priceController.text).toDouble(),
+          stock: Appformat.quantity.parse(stockController.text).toDouble(),
+          dateModify: Appformat.dateHifen.format(DateTime.now()));
+      Database? dbDex = await helper.db;
+      await dbDex!.insert(helper.productModel, product.toJson());
+      homeStore.getProduts(refresh: true);
+      setEdit();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @action
+  Future<void> updateProduct({bool upProd = true}) async {
+    try {
+      if (upProd)
+        product = product.copyWith(
+            name: nameController.text == '' ? null : nameController.text,
+            price: Appformat.quantity.parse(priceController.text).toDouble(),
+            stock: Appformat.quantity.parse(stockController.text).toDouble(),
+            dateModify: Appformat.dateHifen.format(DateTime.now()));
+      Database? dbDex = await helper.db;
+      await dbDex!.update(helper.productModel, product.toJson(),
+          where: "${helper.idProduct}=?", whereArgs: [product.id]);
+      homeStore.getProduts(refresh: true);
+      setEdit();
+    } catch (e) {
+      print(e);
+    }
   }
 }

@@ -123,7 +123,6 @@ abstract class _SplashStoreBase with Store {
 
   @action
   Future<void> insertProduts() async {
-    print('insertProduts');
     try {
       Database? dbDex = await helper.db;
       for (var i = 0; i < 200; i++) {
