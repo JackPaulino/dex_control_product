@@ -13,8 +13,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import 'product/product_page.dart';
-
 class HomePage extends StatefulWidget {
   final String title;
   final UserModel user;
@@ -67,6 +65,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Observer(builder: (_) {
         return CustomScrollView(
@@ -140,60 +139,75 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                         }
                       }),
                 ]),
-            SliverGrid(
-                delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                  if (index ==
-                          controller.listProdut.length -
-                              controller.pageProdut['pass_page'] &&
-                      controller.pageProdut["has_more"]) {
-                    controller.getProduts();
-                  }
-                  if (index == controller.listProdut.length &&
-                      controller.pageProdut["has_more"]) {
-                    if (controller.pageProdut["error"]) {
-                      return Center(
-                        child: InkWell(
-                          onTap: () {
-                            setState(
-                              () {
-                                controller.pageProdut['loading'] = true;
-                                controller.pageProdut['error'] = false;
-                                controller.getProduts();
+            controller.listProdut.length == 0
+                ? SliverFixedExtentList(
+                    itemExtent: height * .85,
+                    delegate: SliverChildListDelegate(
+                      [
+                        Center(
+                            child: Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Text('Sem Produtos Cadastrados')))
+                      ],
+                    ),
+                  )
+                : SliverGrid(
+                    delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                      if (index ==
+                              controller.listProdut.length -
+                                  controller.pageProdut['pass_page'] &&
+                          controller.pageProdut["has_more"]) {
+                        controller.getProduts();
+                      }
+                      if (index == controller.listProdut.length &&
+                          controller.pageProdut["has_more"]) {
+                        if (controller.pageProdut["error"]) {
+                          return Center(
+                            child: InkWell(
+                              onTap: () {
+                                setState(
+                                  () {
+                                    controller.pageProdut['loading'] = true;
+                                    controller.pageProdut['error'] = false;
+                                    controller.getProduts();
+                                  },
+                                );
                               },
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Text(
-                                "Erro ao carregar produtos em oferta. Toque aqui para tentar novamente!"),
-                          ),
-                        ),
-                      );
-                    } else {
-                      return Center(
-                          child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: CircularProgressIndicator(
-                                  valueColor: new AlwaysStoppedAnimation<Color>(
-                                      AppColors.loading))));
-                    }
-                  }
-                  return CardProduct(
-                      product: controller.listProdut[index],
-                      delteFunc: () => controller
-                          .deleteProduct(controller.listProdut[index]),
-                      details: () {
-                        Modular.to.pushNamed('/home/product',
-                            arguments: [controller.listProdut[index],false]);
-                      });
-                }, childCount: controller.listProdut.length),
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 190.0,
-                  mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 1.0,
-                  childAspectRatio: .70,
-                ))
+                              child: Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: Text(
+                                    "Erro ao carregar produtos em oferta. Toque aqui para tentar novamente!"),
+                              ),
+                            ),
+                          );
+                        } else {
+                          return Center(
+                              child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: CircularProgressIndicator(
+                                      valueColor:
+                                          new AlwaysStoppedAnimation<Color>(
+                                              AppColors.loading))));
+                        }
+                      }
+                      return CardProduct(
+                          product: controller.listProdut[index],
+                          delteFunc: () => controller
+                              .deleteProduct(controller.listProdut[index]),
+                          details: () {
+                            Modular.to.pushNamed('/home/product', arguments: [
+                              controller.listProdut[index],
+                              false
+                            ]);
+                          });
+                    }, childCount: controller.listProdut.length),
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 190.0,
+                      mainAxisSpacing: 10.0,
+                      crossAxisSpacing: 1.0,
+                      childAspectRatio: .70,
+                    ))
           ],
         );
       }),

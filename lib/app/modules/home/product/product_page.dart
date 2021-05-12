@@ -212,7 +212,7 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                                 Container(
                                   width: width,
                                   child: CustomLoadButton(
-                                      width: width * .10,
+                                      width: width * .16,
                                       styleText: StyleText.textButton,
                                       txt: widget.newProduct
                                           ? 'Salvar'

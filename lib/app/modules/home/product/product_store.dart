@@ -52,8 +52,8 @@ abstract class _ProductStoreBase with Store {
   @action
   void preencherProduct() {
     nameController.text = product.name;
-    priceController.text = product.price.toString();
-    stockController.text = product.stock.toString();
+    priceController.text = Appformat.quantity.format(product.price);
+    stockController.text = Appformat.quantity.format(product.stock);
   }
 
   @action
@@ -118,12 +118,15 @@ abstract class _ProductStoreBase with Store {
   @action
   Future<void> updateProduct({bool upProd = true}) async {
     try {
-      if (upProd)
+      if (upProd) {
         product = product.copyWith(
             name: nameController.text == '' ? null : nameController.text,
-            price: Appformat.quantity.parse(priceController.text).toDouble(),
-            stock: Appformat.quantity.parse(stockController.text).toDouble(),
+            price: double.parse(
+                priceController.text.replaceAll('.', '').replaceAll(',', '.')),
+            stock: double.parse(
+                stockController.text.replaceAll('.', '').replaceAll(',', '.')),
             dateModify: Appformat.dateHifen.format(DateTime.now()));
+      }
       Database? dbDex = await helper.db;
       await dbDex!.update(helper.productModel, product.toJson(),
           where: "${helper.idProduct}=?", whereArgs: [product.id]);

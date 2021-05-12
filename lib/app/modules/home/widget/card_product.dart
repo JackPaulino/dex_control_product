@@ -89,17 +89,13 @@ class _CardProductState extends State<CardProduct> {
                                 ]);
                           }))
                 ]),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 2),
-                  child: AutoSizeText('${widget.product.name}',
-                      maxLines: 2,
-                      presetFontSizes: [18, 16, 14, 12, 10, 8],
-                      softWrap: true,
-                      wrapWords: true,
-                      style: TextStyle(color: AppColors.pineGreen),
-                      textAlign: TextAlign.center),
-                ),
+                AutoSizeText('${widget.product.name}',
+                    maxLines: 2,
+                    presetFontSizes: [18, 16, 14, 12, 10, 8],
+                    softWrap: true,
+                    wrapWords: true,
+                    style: TextStyle(color: AppColors.pineGreen),
+                    textAlign: TextAlign.center),
                 Container(
                     height: cons.maxHeight * .10,
                     width: cons.maxWidth * .80,

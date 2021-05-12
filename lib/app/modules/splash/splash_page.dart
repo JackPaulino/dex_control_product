@@ -1,6 +1,5 @@
 import 'package:dex_control_product/app/modules/splash/splash_store.dart';
 import 'package:dex_control_product/app/shared/useful/app_colors.dart';
-import 'package:dex_control_product/app/shared/useful/screen_size.dart';
 import 'package:dex_control_product/app/shared/useful/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -27,13 +26,12 @@ class SplashPageState extends ModularState<SplashPage, SplashStore> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    final ScreenSize size = ScreenSize(width: width, height: height);
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
           color: AppColors.greenBlueGrayola,
-          width: size.totalWidth(),
-          height: size.totalHeight(),
+          width: width,
+          height: height,
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -53,10 +51,10 @@ class SplashPageState extends ModularState<SplashPage, SplashStore> {
                       children: [
                         SpinKitCircle(
                             color: AppColors.loading,
-                            size: size.resolutionMaxMin() ? 80 : 40),
+                            size: width > 600.0 ? 80 : 40),
                         Text('Bem Vindo!',
                             textAlign: TextAlign.center,
-                            style: size.resolutionMaxMin()
+                            style: width > 600.0
                                 ? StyleText.textTabletMonitors
                                 : StyleText.textMobile,
                             maxLines: 2,

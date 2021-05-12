@@ -1,5 +1,4 @@
 import 'package:dex_control_product/app/shared/useful/app_colors.dart';
-import 'package:dex_control_product/app/shared/useful/screen_size.dart';
 import 'package:dex_control_product/app/shared/useful/text_style.dart';
 import 'package:dex_control_product/app/shared/widget/custom_load_button.dart';
 import 'package:dex_control_product/app/shared/widget/custom_text_field.dart';
@@ -26,7 +25,6 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    final ScreenSize size = ScreenSize(width: width, height: height);
     return Scaffold(
       key: controller.scaffoldKey,
       backgroundColor: Colors.white,
@@ -40,8 +38,8 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
                 Container(
                     margin: EdgeInsets.only(
                         top: height * .08, bottom: height * .03),
-                    width: size.resolutionMaxMin() ? width * .5 : width * .7,
-                    height: size.resolutionMaxMin() ? width * .5 : width * .7,
+                    width: width > 600.0 ? width * .5 : width * .7,
+                    height: width > 600.0 ? width * .5 : width * .7,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(color: AppColors.primary, width: 3),
@@ -71,8 +69,8 @@ class LoginPageState extends ModularState<LoginPage, LoginStore> {
                             color: AppColors.greenBlueGrayola),
                         onPressed: () => controller.setvisibility())),
                 CustomLoadButton(
-                    width: size.resolutionMaxMin() ? width * .10 : width * .16,
-                    styleText: size.resolutionMaxMin()
+                    width: width > 600.0 ? width * .10 : width * .16,
+                    styleText: width > 600.0
                         ? StyleText.textAutoSizeButton
                         : StyleText.textButton,
                     txt: 'Entrar',
