@@ -173,6 +173,16 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                             child: Column(
                               children: [
                                 CustomTextField(
+                                    label: 'Codigo',
+                                    hint: 'Codigo do Produto',
+                                    validator: (value) =>
+                                        controller.validCodigo(value),
+                                    keyboardType: TextInputType.streetAddress,
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    controller: controller.codigoController,
+                                    onFieldSubmitted: (value) {}),
+                                CustomTextField(
                                     label: 'Nome',
                                     hint: 'Nome do Produto',
                                     validator: (value) =>
@@ -209,25 +219,28 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                                     ),
                                   ],
                                 ),
-                                Container(
-                                  width: width,
-                                  child: CustomLoadButton(
-                                      width: width * .16,
-                                      styleText: StyleText.textButton,
-                                      txt: widget.newProduct
-                                          ? 'Salvar'
-                                          : 'Editar',
-                                      loading: controller.loading,
-                                      onPressed: () {
-                                        if (controller.productForm.currentState!
-                                            .validate()) {
-                                          widget.newProduct
-                                              ? controller.insertProduct()
-                                              : controller.updateProduct(
-                                                  upProd: true);
-                                        }
-                                      }),
-                                ),
+                                controller.habiliteButton()
+                                    ? Container(
+                                        width: width,
+                                        child: CustomLoadButton(
+                                            width: width * .16,
+                                            styleText: StyleText.textButton,
+                                            txt: widget.newProduct
+                                                ? 'Salvar'
+                                                : 'Editar',
+                                            loading: controller.loading,
+                                            onPressed: () {
+                                              if (controller
+                                                  .productForm.currentState!
+                                                  .validate()) {
+                                                widget.newProduct
+                                                    ? controller.insertProduct()
+                                                    : controller.updateProduct(
+                                                        upProd: true);
+                                              }
+                                            }),
+                                      )
+                                    : Container(),
                               ],
                             ),
                           ),

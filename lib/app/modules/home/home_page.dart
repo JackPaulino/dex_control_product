@@ -216,6 +216,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
           tooltip: 'Create',
           onPressed: () {
             ProductModel prod = ProductModel(
+                codigo: 0,
                 name: 'Novo Produto',
                 price: 0.00,
                 stock: 0.00,

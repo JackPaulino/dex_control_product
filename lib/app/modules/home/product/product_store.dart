@@ -29,10 +29,15 @@ abstract class _ProductStoreBase with Store {
 
   @observable
   ProductModel product = ProductModel(
-      name: '', dateModify: Appformat.dateHifen.format(DateTime.now()));
+      codigo: 0,
+      name: '',
+      dateModify: Appformat.dateHifen.format(DateTime.now()));
 
   @observable
   HomeStore homeStore = Modular.get<HomeStore>();
+
+  @observable
+  TextEditingController codigoController = new TextEditingController();
 
   @observable
   TextEditingController nameController = new TextEditingController();
@@ -52,8 +57,17 @@ abstract class _ProductStoreBase with Store {
   @action
   void preencherProduct() {
     nameController.text = product.name;
+    codigoController.text = product.codigo.toString();
     priceController.text = Appformat.quantity.format(product.price);
     stockController.text = Appformat.quantity.format(product.stock);
+  }
+
+  @action
+  String? validCodigo(String texto) {
+    if (texto.isEmpty) {
+      return "Digite o codigo do produto";
+    }
+    return null;
   }
 
   @action
@@ -81,6 +95,13 @@ abstract class _ProductStoreBase with Store {
   }
 
   @action
+  bool habiliteButton() {
+    return (codigoController.text != '' && nameController.text != '')
+        ? true
+        : false;
+  }
+
+  @action
   Future<void> setImage() async {
     await picker
         .getImage(source: ImageSource.camera, maxHeight: 400, maxWidth: 400)
@@ -102,6 +123,7 @@ abstract class _ProductStoreBase with Store {
   Future<void> insertProduct() async {
     try {
       product = product.copyWith(
+          codigo: int.parse(codigoController.text),
           name: nameController.text == '' ? null : nameController.text,
           price: Appformat.quantity.parse(priceController.text).toDouble(),
           stock: Appformat.quantity.parse(stockController.text).toDouble(),
@@ -120,6 +142,7 @@ abstract class _ProductStoreBase with Store {
     try {
       if (upProd) {
         product = product.copyWith(
+            codigo: int.parse(codigoController.text),
             name: nameController.text == '' ? null : nameController.text,
             price: double.parse(
                 priceController.text.replaceAll('.', '').replaceAll(',', '.')),

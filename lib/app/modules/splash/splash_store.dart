@@ -120,25 +120,4 @@ abstract class _SplashStoreBase with Store {
       print(e);
     }
   }
-
-  @action
-  Future<void> insertProduts() async {
-    try {
-      Database? dbDex = await helper.db;
-      for (var i = 0; i < 200; i++) {
-        var o = 0;
-        if (i > 100) o = 1;
-
-        ProductModel prod = ProductModel(
-            name: 'Arroz$i',
-            price: (3.25 + i),
-            stock: (16.0 + i),
-            dateModify: Appformat.dateHifen
-                .format(DateTime.now().subtract(Duration(days: o))));
-        await dbDex!.insert(helper.productModel, prod.toJson());
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
 }

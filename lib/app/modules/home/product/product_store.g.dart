@@ -198,6 +198,17 @@ mixin _$ProductStore on _ProductStoreBase, Store {
   }
 
   @override
+  void preencherProduct() {
+    final _$actionInfo = _$_ProductStoreBaseActionController.startAction(
+        name: '_ProductStoreBase.preencherProduct');
+    try {
+      return super.preencherProduct();
+    } finally {
+      _$_ProductStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String? validName(String texto) {
     final _$actionInfo = _$_ProductStoreBaseActionController.startAction(
         name: '_ProductStoreBase.validName');

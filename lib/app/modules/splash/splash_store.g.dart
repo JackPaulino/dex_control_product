@@ -94,14 +94,6 @@ mixin _$SplashStore on _SplashStoreBase, Store {
     return _$initListProdutsAsyncAction.run(() => super.initListProduts());
   }
 
-  final _$insertProdutsAsyncAction =
-      AsyncAction('_SplashStoreBase.insertProduts');
-
-  @override
-  Future<void> insertProduts() {
-    return _$insertProdutsAsyncAction.run(() => super.insertProduts());
-  }
-
   @override
   String toString() {
     return '''
