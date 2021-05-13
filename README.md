@@ -26,14 +26,14 @@ O Aplicativo possibilita o controle de produtos sendo possível criar novos prod
 ## 📦 Desenvolvimento
 
 
-### 📋 Tecnologias Ultilizadas
+### 📋 Tecnologias Utilizadas
 
 - Flutter 2.0.6
 - Dart SDK version: 2.12.3
 
-*Ultizando suporte de segunraça nula*
+*Ultizando suporte de segurança nula*
 
- ### Dependecia do Projeto
+ ### Dependência do Projeto
 
    - cupertino_icons: ^1.0.2
    - flutter_modular: ^3.2.0
@@ -88,4 +88,4 @@ Flutter pub get
  * Agradeço a oportunidade de participar desse teste seletivo 📢
 
 ---
-⌨️ com ❤️ por [Jakcson Henrique] (https://github.com/JackPaulino) 😊
+⌨️ com ❤️ por [Jakson Henrique] (https://github.com/JackPaulino) 😊
