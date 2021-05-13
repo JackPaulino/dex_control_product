@@ -8,7 +8,7 @@
 
 Este projeto tem como foco mostrar um pouco do conhecimento técnicos durante o teste seletivo para a vaga  de Desenvolvedor Front-end Flutter Pleno na empresa Nextar Tecnologia de Software Ltda.
 
-O Aplicativo prossibilita o controle de produtos sendo possivel criar novos produtos, edição e exclusão.
+O Aplicativo possibilita o controle de produtos sendo possível criar novos produtos, edição e exclusão.
 
 ## Layout Mobile
 ![Mobile 1](https://github.com/JackPaulino/dex_control_product/blob/main/assets/images/print/Splash.jpg)![Mobile 2](https://github.com/JackPaulino/dex_control_product/blob/main/assets/images/print/login.jpg)![Mobile 3](https://github.com/JackPaulino/dex_control_product/blob/main/assets/images/print/home-3.jpg)![Mobile 4](https://github.com/JackPaulino/dex_control_product/blob/main/assets/images/print/home-1.jpg)![Mobile 5](https://github.com/JackPaulino/dex_control_product/blob/main/assets/images/print/home-2.jpg)
@@ -22,7 +22,7 @@ O Aplicativo prossibilita o controle de produtos sendo possivel criar novos prod
 - Flutter 2.0.6
 - Dart SDK version: 2.12.3
 
-*Ultizando suporte de segunraça nullo*
+*Ultizando suporte de segunraça nula*
 
  ### Dependecia do Projeto
 
@@ -65,7 +65,7 @@ dart pub global activate slidy
 # Clone do Projeto 
 git clone https://github.com/JackPaulino/dex_control_product.git
 
-# Baixar as dependências 
+# Baixar as dependências
 Flutter pub get
 ```
 
@@ -76,7 +76,7 @@ Flutter pub get
 
 ## 🎁 Expressões de gratidão
 
- * Agradeço a Oportunidade de participar desse teste seletivo 📢
+ * Agradeço a oportunidade de participar desse teste seletivo 📢
 
 ---
 ⌨️ com ❤️ por [Jakcson Henrique] https://github.com/JackPaulino 😊
