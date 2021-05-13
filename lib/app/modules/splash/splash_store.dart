@@ -4,7 +4,6 @@ import 'package:dex_control_product/app/shared/models/product_model.dart';
 import 'package:dex_control_product/app/shared/models/user_model.dart';
 import 'package:dex_control_product/app/shared/useful/crypto_password.dart';
 import 'package:dex_control_product/app/shared/useful/helper.dart';
-import 'package:dex_control_product/app/shared/useful/text_style.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:sqflite/sqflite.dart';
