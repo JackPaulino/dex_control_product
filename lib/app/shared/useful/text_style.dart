@@ -15,23 +15,12 @@ class StyleText {
       new TextStyle(fontSize: 35, color: Colors.white);
   static var textField = new TextStyle(fontSize: 22, color: Colors.black);
   static var mdgLogin = new TextStyle(fontSize: 16, color: AppColors.primary);
-  static var cabecalho = new TextStyle(fontSize: 30, color: Colors.white);
-  static var number = new TextStyle(fontSize: 25, color: Colors.white);
-  static var dados = new TextStyle(fontSize: 16, color: Colors.white);
-  static var dadoblack = new TextStyle(fontSize: 16, color: Colors.black);
-  static var movBlack = new TextStyle(
-      fontSize: 18.0, color: Colors.black, fontWeight: FontWeight.normal);
-  static var movWhite = new TextStyle(
-      fontSize: 18.0, color: Colors.white, fontWeight: FontWeight.normal);
-  static var movTopWhite = new TextStyle(
-      fontWeight: FontWeight.bold, color: Colors.white, fontSize: 22);
 }
 
 class Appformat {
   static var moneyR$ =
       new NumberFormat.currency(locale: 'pt', decimalDigits: 2, symbol: 'R\$');
   static var quantity = new NumberFormat("###,###.###", "pt-br");
-  static var quant = new NumberFormat("####.###", "en_US");
   static var date = new DateFormat('dd/MM/yyyy');
   static var dateHifen = new DateFormat('yyyy-MM-dd');
   static var datehour = new DateFormat('yyyy-MM-dd HH:mm');

@@ -65,7 +65,7 @@ O Aplicativo possibilita o controle de produtos sendo possível criar novos prod
  
  *Link de Instalação do Flutter* - https://flutter.dev/docs/get-started/install
  
- *link de Intalação do Dart para ultilizar o Slidy* - https://dart.dev/get-dart
+ *Link de Intalação do Dart para ultilizar o Slidy* - https://dart.dev/get-dart
 
 ```bash
 # Intalação do packege Slidy no Dart 
