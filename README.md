@@ -11,7 +11,16 @@ Este projeto tem como foco mostrar um pouco do conhecimento técnicos durante o 
 O Aplicativo possibilita o controle de produtos sendo possível criar novos produtos, edição e exclusão.
 
 ## Layout Mobile
-![Mobile 1](https://github.com/JackPaulino/dex_control_product/blob/main/assets/images/print/Splash.jpg)![Mobile 2](https://github.com/JackPaulino/dex_control_product/blob/main/assets/images/print/login.jpg)![Mobile 3](https://github.com/JackPaulino/dex_control_product/blob/main/assets/images/print/home-3.jpg)![Mobile 4](https://github.com/JackPaulino/dex_control_product/blob/main/assets/images/print/home-1.jpg)![Mobile 5](https://github.com/JackPaulino/dex_control_product/blob/main/assets/images/print/home-2.jpg)
+<br><br>
+<div align="left">
+ <img  width="189" height="400" src="https://github.com/JackPaulino/dex_control_product/blob/main/assets/images/print/Splash.jpg"><span style="padding-left:2px"></span>
+ <img  width="189" height="400" src="https://github.com/JackPaulino/dex_control_product/blob/main/assets/images/print/login.jpg"><span style="padding-left:2px"></span>
+ <img  width="189" height="400" src="https://github.com/JackPaulino/dex_control_product/blob/main/assets/images/print/home-3.jpg"><span style="padding-left:2px"></span>
+ <img  width="189" height="400" src="https://github.com/JackPaulino/dex_control_product/blob/main/assets/images/print/home-1.jpg"><span style="padding-left:2px"></span>
+ <img  width="189" height="400" src="https://github.com/JackPaulino/dex_control_product/blob/main/assets/images/print/home-2.jpg"><span style="padding-left:2px"></span>
+ </div>
+ <br><br>
+ 
 
 
 ## 📦 Desenvolvimento
