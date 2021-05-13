@@ -79,4 +79,4 @@ Flutter pub get
  * Agradeço a oportunidade de participar desse teste seletivo 📢
 
 ---
-⌨️ com ❤️ por [Jakcson Henrique] https://github.com/JackPaulino 😊
+⌨️ com ❤️ por [Jakcson Henrique] (https://github.com/JackPaulino) 😊
