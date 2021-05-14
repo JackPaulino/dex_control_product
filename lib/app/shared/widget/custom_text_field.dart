@@ -11,6 +11,7 @@ class CustomTextField extends StatefulWidget {
   TextEditingController controller;
   Function validator;
   Function onFieldSubmitted;
+  Function onChanged;
   TextCapitalization textCapitalization;
   bool visibility;
   bool inputFormat;
@@ -24,6 +25,7 @@ class CustomTextField extends StatefulWidget {
       required this.controller,
       required this.validator,
       required this.onFieldSubmitted,
+      required this.onChanged,
       this.inputFormat = false,
       this.textCapitalization = TextCapitalization.none,
       this.textAlign = TextAlign.start,
@@ -62,6 +64,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               labelStyle: TextStyle(color: AppColors.greenBlueGrayola),
               hintText: widget.hint),
           onFieldSubmitted: (value) => widget.onFieldSubmitted(value),
+          onChanged: (value)=> widget.onChanged(value),
           inputFormatters: widget.inputFormat
               ? [
                   LengthLimitingTextInputFormatter(7),

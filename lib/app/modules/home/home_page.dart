@@ -78,7 +78,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                 actions: [
                   PopupMenuButton<int>(
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.only(right: 10,top: 5),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
@@ -109,6 +109,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                                     label: 'Preço',
                                     hint: '0,00',
                                     validator: () {},
+                                    onChanged: (){},
                                     keyboardType: TextInputType.number,
                                     inputFormat: true,
                                     textAlign: TextAlign.center,

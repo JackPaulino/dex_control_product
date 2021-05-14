@@ -25,6 +25,9 @@ abstract class _ProductStoreBase with Store {
   bool edit = false;
 
   @observable
+  bool visibilyButton = false;
+
+  @observable
   ImagePicker picker = ImagePicker();
 
   @observable
@@ -95,10 +98,10 @@ abstract class _ProductStoreBase with Store {
   }
 
   @action
-  bool habiliteButton() {
-    return (codigoController.text != '' && nameController.text != '')
-        ? true
-        : false;
+  void habiliteButton(String value) {
+    codigoController.text == '' || nameController.text == ''
+        ? visibilyButton = false
+        : visibilyButton = true;
   }
 
   @action
@@ -124,12 +127,12 @@ abstract class _ProductStoreBase with Store {
     try {
       product = product.copyWith(
           codigo: int.parse(codigoController.text),
-          name: nameController.text == '' ? null : nameController.text,
+          name: nameController.text,
           price: Appformat.quantity.parse(priceController.text).toDouble(),
           stock: Appformat.quantity.parse(stockController.text).toDouble(),
           dateModify: Appformat.dateHifen.format(DateTime.now()));
       Database? dbDex = await helper.db;
-      await dbDex!.insert(helper.productModel, product.toJson());
+      await dbDex!.insert(helper.productModel,product.toJson());
       homeStore.getProduts(refresh: true);
       Modular.to.pop();
       setEdit();

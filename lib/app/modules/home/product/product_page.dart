@@ -63,22 +63,22 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                             padding: const EdgeInsets.symmetric(vertical: 20),
                             child: Hero(
                                 tag: controller.product.id.toString(),
-                                child: controller.product.image != null
+                                child: controller.product.image != ''
                                     ? Image.memory(
                                         base64Decode(
                                             '${controller.product.image}'),
                                         fit: BoxFit.contain,
-                                        width: width * .80,
-                                        height: width * .80,
+                                        width: width * .60,
+                                        height: width * .60,
                                         errorBuilder:
                                             (context, error, stackTrace) =>
                                                 Image.asset(
                                                     'assets/images/erro.jpg',
-                                                    width: width * .90,
-                                                    height: width * .90))
+                                                    width: width * .60,
+                                                    height: width * .60))
                                     : Image.asset('assets/images/notimg.jpg',
-                                        width: width * .80,
-                                        height: width * .80)),
+                                        width: width * .60,
+                                        height: width * .60)),
                           ),
                           Positioned(
                               left: 0,
@@ -177,6 +177,11 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                                     hint: 'Codigo do Produto',
                                     validator: (value) =>
                                         controller.validCodigo(value),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        controller.habiliteButton(value);
+                                      });
+                                    },
                                     keyboardType: TextInputType.number,
                                     textCapitalization:
                                         TextCapitalization.words,
@@ -187,6 +192,11 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                                     hint: 'Nome do Produto',
                                     validator: (value) =>
                                         controller.validName(value),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        controller.habiliteButton(value);
+                                      });
+                                    },
                                     keyboardType: TextInputType.streetAddress,
                                     textCapitalization:
                                         TextCapitalization.words,
@@ -204,6 +214,7 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                                               controller.priceController,
                                           validator: (value) =>
                                               controller.validPrice(value),
+                                          onChanged: (value) {},
                                           onFieldSubmitted: (value) {}),
                                     ),
                                     SizedBox(width: 8),
@@ -213,6 +224,7 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                                           hint: '0,00',
                                           validator: (value) =>
                                               controller.validStock(value),
+                                          onChanged: (value) {},
                                           keyboardType: TextInputType.number,
                                           inputFormat: true,
                                           controller:
@@ -221,7 +233,7 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                                     ),
                                   ],
                                 ),
-                                controller.habiliteButton()
+                                controller.visibilyButton
                                     ? Container(
                                         width: width,
                                         child: CustomLoadButton(

@@ -11,7 +11,7 @@ class ProductModel {
       {this.id,
       required this.codigo,
       required this.name,
-      this.image,
+      this.image = '',
       this.price,
       this.stock,
       required this.dateModify});

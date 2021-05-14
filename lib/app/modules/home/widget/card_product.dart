@@ -43,7 +43,7 @@ class _CardProductState extends State<CardProduct> {
                         elevation: 5,
                         child: Hero(
                             tag: widget.product.id.toString(),
-                            child: widget.product.image != null
+                            child: widget.product.image != ''
                                 ? Image.memory(
                                     base64Decode('${widget.product.image}'),
                                     fit: BoxFit.contain,
