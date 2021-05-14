@@ -9,7 +9,7 @@ class AppTheme {
 
   ThemeData get defaultTheme => ThemeData(
       fontFamily: 'Open-sans',
-      primaryColor: AppColors.primary,
+      primaryColor: AppColors.greenBlueGrayola,
       appBarTheme: AppBarTheme(brightness: Brightness.dark),
       scaffoldBackgroundColor: Colors.amber[50],
       inputDecorationTheme: InputDecorationTheme(

@@ -177,7 +177,7 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                                     hint: 'Codigo do Produto',
                                     validator: (value) =>
                                         controller.validCodigo(value),
-                                    keyboardType: TextInputType.streetAddress,
+                                    keyboardType: TextInputType.number,
                                     textCapitalization:
                                         TextCapitalization.words,
                                     controller: controller.codigoController,
@@ -199,6 +199,7 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                                           label: 'Preço',
                                           hint: '0,00',
                                           keyboardType: TextInputType.number,
+                                          inputFormat: true,
                                           controller:
                                               controller.priceController,
                                           validator: (value) =>
@@ -213,6 +214,7 @@ class _ProductPageState extends ModularState<ProductPage, ProductStore> {
                                           validator: (value) =>
                                               controller.validStock(value),
                                           keyboardType: TextInputType.number,
+                                          inputFormat: true,
                                           controller:
                                               controller.stockController,
                                           onFieldSubmitted: (value) {}),

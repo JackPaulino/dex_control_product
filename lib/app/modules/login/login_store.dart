@@ -23,11 +23,10 @@ abstract class _LoginStoreBase with Store {
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @observable
-  TextEditingController ctrlLogin = new TextEditingController(text: 'Jackson');
+  TextEditingController ctrlLogin = new TextEditingController();
 
   @observable
-  TextEditingController ctrlSenha =
-      new TextEditingController(text: 'program2021');
+  TextEditingController ctrlSenha = new TextEditingController();
 
   @observable
   UserModel user = UserModel();

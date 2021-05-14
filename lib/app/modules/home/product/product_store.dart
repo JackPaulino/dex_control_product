@@ -104,7 +104,7 @@ abstract class _ProductStoreBase with Store {
   @action
   Future<void> setImage() async {
     await picker
-        .getImage(source: ImageSource.camera, maxHeight: 400, maxWidth: 400)
+        .getImage(source: ImageSource.gallery, maxHeight: 400, maxWidth: 400)
         .then((imgFile) async {
       if (imgFile != null) {
         final bytes = File(imgFile.path).readAsBytesSync();
@@ -131,6 +131,7 @@ abstract class _ProductStoreBase with Store {
       Database? dbDex = await helper.db;
       await dbDex!.insert(helper.productModel, product.toJson());
       homeStore.getProduts(refresh: true);
+      Modular.to.pop();
       setEdit();
     } catch (e) {
       print(e);

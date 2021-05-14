@@ -13,6 +13,7 @@ class CustomTextField extends StatefulWidget {
   Function onFieldSubmitted;
   TextCapitalization textCapitalization;
   bool visibility;
+  bool inputFormat;
   TextAlign textAlign;
   IconButton? suffixIcon;
   TextInputType keyboardType;
@@ -23,6 +24,7 @@ class CustomTextField extends StatefulWidget {
       required this.controller,
       required this.validator,
       required this.onFieldSubmitted,
+      this.inputFormat = false,
       this.textCapitalization = TextCapitalization.none,
       this.textAlign = TextAlign.start,
       this.suffixIcon,
@@ -60,7 +62,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               labelStyle: TextStyle(color: AppColors.greenBlueGrayola),
               hintText: widget.hint),
           onFieldSubmitted: (value) => widget.onFieldSubmitted(value),
-          inputFormatters: widget.keyboardType == TextInputType.number
+          inputFormatters: widget.inputFormat
               ? [
                   LengthLimitingTextInputFormatter(7),
                   // ignore: deprecated_member_use

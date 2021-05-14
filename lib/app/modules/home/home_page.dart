@@ -71,7 +71,6 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
         return CustomScrollView(
           slivers: [
             SliverAppBar(
-                backgroundColor: AppColors.greenBlueGrayola,
                 title: Text('Bem vindo ${controller.user.name}',
                     style: StyleText.labelTextField),
                 floating: true,
@@ -111,6 +110,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                                     hint: '0,00',
                                     validator: () {},
                                     keyboardType: TextInputType.number,
+                                    inputFormat: true,
                                     textAlign: TextAlign.center,
                                     controller: qtdController,
                                     onFieldSubmitted: (value) {
